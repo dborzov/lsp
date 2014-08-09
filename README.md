@@ -5,7 +5,7 @@
 
 
 
-## lsp: list files in mildly more readable format
+## lsp: list files in mildly human-frendlier manner
 
 
 
@@ -31,6 +31,21 @@ you get this:
   (actually I did not come up with what is it going to look like yet)
 ```
 which is arguably more readable.
+
+## Features
+
+- shows reasonable summaries for subfolders
+- timeout on running time so no hanging for remotely mounted devices and such
+* knows what things like a git repo is
+- so shows recent git diffs and things
+
+## Installation
+
+`lsp` is written in `go` and can be installed like a standard `go` program:
+
+```
+ $ go get github.com/dborzov/lsp
+```
 
 ---
 
