@@ -47,7 +47,7 @@ which is arguably more readable.
  $ go get github.com/dborzov/lsp
 ```
 
----
+## Dedication
 
 This tool is dedicated to the lifetime of achievement of my personal hero and muse, the one with the nicest LUMPS,
 the [Lumpy Space Princess](http://adventuretime.wikia.com/wiki/Lumpy_Space_Princess) (LSP).
