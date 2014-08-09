@@ -7,6 +7,10 @@ import (
 	"github.com/mitchellh/colorstring"
 )
 
+const (
+	commonPrefix = "[blue]./"
+)
+
 func main() {
 	files, err := ioutil.ReadDir(".")
 	if err != nil {
@@ -16,9 +20,9 @@ func main() {
 
 	for _, f := range files {
 		if f.IsDir() {
-			fmt.Printf(colorstring.Color(fmt.Sprintf("[blue]/[white]%s[blue]/.. \n", f.Name())))
+			fmt.Printf(colorstring.Color(commonPrefix + fmt.Sprintf("[white]%s[blue]/.. \n", f.Name())))
 		} else {
-
+			fmt.Printf(colorstring.Color(commonPrefix + fmt.Sprintf("[green]%s \n", f.Name())))
 		}
 	}
 }
