@@ -1,16 +1,19 @@
 > "Oh, my Glob, you guys, drama bomb!"
 
-> *[Lumpy Space Princess](http://adventuretime.wikia.com/wiki/Lumpy_Space_Princess) (LSP), Season 2, episode 1 *
+*[Lumpy Space Princess](http://adventuretime.wikia.com/wiki/Lumpy_Space_Princess) (LSP), Season 2, episode 1*
 
 
-lsp: list files in mildly more readable format
-===
+
+
+## lsp: list files in mildly more readable format
+
+
 
 
 
 `lsp` is like [`ls`](http://en.wikipedia.org/wiki/Ls) command
 but does not attempt to meet
-the archaic POSIX specification, so instead of this:
+that archaic POSIX specification, so instead of this:
 ```
 (bash)$ ls -l
 
@@ -29,5 +32,9 @@ you get this:
 ```
 which is arguably more readable.
 
+---
+
 This tool is dedicated to the lifetime of achievement of my personal hero and muse, the one with the nicest LUMPS,
 the [Lumpy Space Princess](http://adventuretime.wikia.com/wiki/Lumpy_Space_Princess) (LSP).
+
+![can't handle these lumps](lumps.gif)
