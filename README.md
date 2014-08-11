@@ -47,7 +47,7 @@ For now it can be installed using `go get`:
  $ go get github.com/dborzov/lsp
 ```
 Once it becomes more functional, `lsp` will be distributed in native binaries
-for all platforms (Linux, MacOS, Windows). No dependancies or anything configurable by design, only binary.
+for all platforms (Linux, MacOS, Windows). No dependancies or anything configurable by design, just one binary.
 
 ## Soft stuff
 ![can't handle these lumps](lumps.jpg)
