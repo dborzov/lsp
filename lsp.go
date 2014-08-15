@@ -29,9 +29,10 @@ func main() {
 	}()
 
 	FileList = make([]FileInfo, len(files))
+	results := make(chan *FileInfo)
 	for i, f := range files {
 		FileList[i].f = f
-		go FileList[i].InvestigateFile()
+		go FileList[i].InvestigateFile(results)
 	}
 
 	sort.Sort(byType(files))

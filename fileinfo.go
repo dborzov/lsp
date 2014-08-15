@@ -2,7 +2,10 @@
 // of individual file/folder in the list and methods to fetch this info
 package main
 
-import "os"
+import (
+	"os"
+	"time"
+)
 
 // FileInfo is to store everything known about the file object
 type FileInfo struct {
@@ -10,6 +13,7 @@ type FileInfo struct {
 }
 
 // InvestigateFile prepares detailed file/directory summary
-func (fi *FileInfo) InvestigateFile() {
-
+func (fi FileInfo) InvestigateFile(updated chan *FileInfo) {
+	time.Sleep(time.Millisecond)
+	updated <- &fi
 }
