@@ -1,15 +1,13 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
+import "os"
 
 // Mode reflects running mode with superset of ls flags
 type Mode struct {
-	d bool // shows directories only
-	h bool // "himan-readable" mode
-	l bool // "long" form, more details
+	d    bool // shows directories only
+	h    bool // "himan-readable" mode
+	l    bool // "long" form, more details
+	path string
 }
 
 const flagDask = '-'
@@ -19,8 +17,8 @@ var mode = new(Mode)
 func parseArguments() {
 	for _, l := range os.Args[1:] {
 		if l[0] == flagDask {
+			// that is a flag!
 			for _, flag := range l[1:] {
-				// fmt.Printf("type: %s, The letter is %#U \n", reflect.TypeOf(flag), flag)
 				var f *bool
 				switch flag {
 				case 'd':
@@ -36,5 +34,4 @@ func parseArguments() {
 			}
 		}
 	}
-	fmt.Println(*mode)
 }

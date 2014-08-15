@@ -1,3 +1,4 @@
+// lsp.go contains main() function
 package main
 
 import (
@@ -5,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"sort"
+	"time"
 
 	"github.com/mitchellh/colorstring"
 )
@@ -31,12 +33,27 @@ func main() {
 		fmt.Printf("Unable to list directory: %s \n", err)
 		return
 	}
+
+	timeout := make(chan bool, 1)
+	go func() {
+		time.Sleep(1 * time.Second)
+		timeout <- true
+	}()
+
+	FileList = make([]FileInfo, len(files))
+	for i, f := range files {
+		FileList[i].f = f
+		go FileList[i].InvestigateFile()
+	}
+
 	sort.Sort(byType(files))
 	for _, f := range files {
 		if f.IsDir() {
 			fmt.Printf(colorstring.Color(commonPrefix + fmt.Sprintf("[white]%s[blue]/ \n", f.Name())))
 		} else {
-			fmt.Printf(colorstring.Color(commonPrefix + fmt.Sprintf("[green]%s \n", f.Name())))
+			if !mode.d {
+				fmt.Printf(colorstring.Color(commonPrefix + fmt.Sprintf("[green]%s \n", f.Name())))
+			}
 		}
 	}
 }
