@@ -14,6 +14,6 @@ type FileInfo struct {
 
 // InvestigateFile prepares detailed file/directory summary
 func (fi FileInfo) InvestigateFile(updated chan *FileInfo) {
-	time.Sleep(time.Millisecond)
+	time.Sleep(1 * time.Millisecond)
 	updated <- &fi
 }

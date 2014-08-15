@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"sort"
-	"time"
 
 	"github.com/mitchellh/colorstring"
 )
@@ -22,18 +21,7 @@ func main() {
 		return
 	}
 
-	timeout := make(chan bool, 1)
-	go func() {
-		time.Sleep(1 * time.Second)
-		timeout <- true
-	}()
-
-	FileList = make([]FileInfo, len(files))
-	results := make(chan *FileInfo)
-	for i, f := range files {
-		FileList[i].f = f
-		go FileList[i].InvestigateFile(results)
-	}
+	FileList = researchFileList(files)
 
 	sort.Sort(byType(files))
 	for _, f := range files {
