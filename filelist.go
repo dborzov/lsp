@@ -1,10 +1,9 @@
-// filelist contains Filelist []Fileinfo definition
+// filelist.go contains Filelist []Fileinfo definition
 // and methods to do the two tasks: filter, sort and
 // represent as appropriate to the running mode (flags)
 package main
 
 import (
-	"fmt"
 	"os"
 	"time"
 )
@@ -40,7 +39,6 @@ func researchFileList(files []os.FileInfo) []FileInfo {
 		select {
 		case <-results:
 			leftNotUpdated -= 1
-			fmt.Printf("leftNotUpdated is now %s \n", leftNotUpdated)
 		case <-timeout:
 			leftNotUpdated = 0
 		}

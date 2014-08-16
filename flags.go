@@ -1,6 +1,9 @@
 package main
 
-import "os"
+import (
+	"fmt"
+	"os"
+)
 
 // Mode reflects running mode with superset of ls flags
 type Mode struct {
@@ -10,13 +13,13 @@ type Mode struct {
 	path string
 }
 
-const flagDask = '-'
+const flagDash = '-'
 
 var mode = new(Mode)
 
 func parseArguments() {
-	for _, l := range os.Args[1:] {
-		if l[0] == flagDask {
+	for i, l := range os.Args[1:] {
+		if l[0] == flagDash {
 			// that is a flag!
 			for _, flag := range l[1:] {
 				var f *bool
@@ -32,6 +35,16 @@ func parseArguments() {
 					*f = true
 				}
 			}
+		} else {
+			// argument seems to be part of the target path
+			if i != 0 {
+				mode.path = mode.path + " "
+			}
+			mode.path = mode.path + l
 		}
+	}
+
+	if mode.path != "" {
+		fmt.Printf("Attempting to read dir: \"%s\" \n\n", mode.path)
 	}
 }
