@@ -19,7 +19,7 @@ func main() {
 		fmt.Printf("Unable to find directory %s \n", mode.inputPath)
 		return
 	}
-	files, err := ioutil.ReadDir(mode.inputPath)
+	files, err := ioutil.ReadDir(mode.targetPath)
 	if err != nil {
 		fmt.Printf("Unable to list directory: %s \n", err)
 		return
