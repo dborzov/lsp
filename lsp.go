@@ -14,8 +14,12 @@ const (
 )
 
 func main() {
-	parseArguments()
-	files, err := ioutil.ReadDir(".")
+	err := parseArguments()
+	if err != nil {
+		fmt.Printf("Unable to find directory %s \n", mode.inputPath)
+		return
+	}
+	files, err := ioutil.ReadDir(mode.inputPath)
 	if err != nil {
 		fmt.Printf("Unable to list directory: %s \n", err)
 		return

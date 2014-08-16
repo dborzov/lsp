@@ -6,21 +6,24 @@ package main
 import (
 	"fmt"
 	"os"
+	filepath "path/filepath"
 )
 
 // Mode reflects running mode with superset of ls flags and target path
 type Mode struct {
-	d    bool // shows directories only
-	h    bool // "himan-readable" mode
-	l    bool // "long" form, more details
-	path string
+	d          bool   // shows directories only
+	h          bool   // "himan-readable" mode
+	l          bool   // "long" form, more details
+	inputPath  string // path as taken from the argument parsing
+	targetPath string // target path
 }
 
 const flagDash = '-'
 
 var mode = new(Mode)
+var err error
 
-func parseArguments() {
+func parseArguments() error {
 	for i, l := range os.Args[1:] {
 		if l[0] == flagDash {
 			// this argument seems to be a flag
@@ -39,15 +42,15 @@ func parseArguments() {
 				}
 			}
 		} else {
-			// this argument seems to be a part of the target path
+			// this argument seems to be a part of the target inputPath
 			if i != 0 {
-				mode.path = mode.path + " "
+				mode.inputPath = mode.inputPath + " "
 			}
-			mode.path = mode.path + l
+			mode.inputPath = mode.inputPath + l
 		}
 	}
 
-	if mode.path != "" {
-		fmt.Printf("Attempting to read dir: \"%s\" \n\n", mode.path)
-	}
+	mode.targetPath, err = filepath.Abs(mode.inputPath)
+	fmt.Printf("Reading directory: \"%s\" \n\n", mode.targetPath)
+	return err
 }
