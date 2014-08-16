@@ -1,3 +1,6 @@
+// arguments.go parses arguments in order inferring
+// the target path and flags invoked to the best of its ability.
+//
 package main
 
 import (
@@ -5,7 +8,7 @@ import (
 	"os"
 )
 
-// Mode reflects running mode with superset of ls flags
+// Mode reflects running mode with superset of ls flags and target path
 type Mode struct {
 	d    bool // shows directories only
 	h    bool // "himan-readable" mode
@@ -20,7 +23,7 @@ var mode = new(Mode)
 func parseArguments() {
 	for i, l := range os.Args[1:] {
 		if l[0] == flagDash {
-			// that is a flag!
+			// this argument seems to be a flag
 			for _, flag := range l[1:] {
 				var f *bool
 				switch flag {
@@ -36,7 +39,7 @@ func parseArguments() {
 				}
 			}
 		} else {
-			// argument seems to be part of the target path
+			// this argument seems to be a part of the target path
 			if i != 0 {
 				mode.path = mode.path + " "
 			}
