@@ -3,12 +3,11 @@
 // represent as appropriate to the running mode (flags)
 package main
 
-import (
-	"os"
-	"time"
-)
+import "os"
 
 var FileList []FileInfo
+
+type fileInfoUpdater [2]*FileInfo
 
 type byType []os.FileInfo
 
@@ -23,18 +22,16 @@ func (a byType) Less(i, j int) bool {
 
 func researchFileList(files []os.FileInfo) []FileInfo {
 	fileList := make([]FileInfo, len(files))
-	results := make(chan *FileInfo)
+	results := make(chan fileInfoUpdater)
 	for i, f := range files {
 		fileList[i].f = f
-		go fileList[i].InvestigateFile(results)
+		go fileList[i].InvestigateFile(&fileList[i], results)
 	}
 
-	timeout := make(chan bool, 1)
-	go func() {
-		time.Sleep(200 * time.Millisecond)
-		timeout <- true
-	}()
+	setTimeoutTimer()
+
 	leftNotUpdated := len(files)
+
 	for leftNotUpdated > 0 {
 		select {
 		case <-results:
