@@ -5,9 +5,13 @@ package main
 
 import "os"
 
+// FileList maintains current file items to show
 var FileList []FileInfo
 
-type fileInfoUpdater [2]*FileInfo
+type fileInfoUpdater struct {
+	i    int // index
+	item *FileInfo
+}
 
 type byType []os.FileInfo
 
@@ -25,7 +29,7 @@ func researchFileList(files []os.FileInfo) []FileInfo {
 	results := make(chan fileInfoUpdater)
 	for i, f := range files {
 		fileList[i].f = f
-		go fileList[i].InvestigateFile(&fileList[i], results)
+		go fileList[i].InvestigateFile(i, results)
 	}
 
 	setTimeoutTimer()
@@ -34,8 +38,9 @@ func researchFileList(files []os.FileInfo) []FileInfo {
 
 	for leftNotUpdated > 0 {
 		select {
-		case <-results:
-			leftNotUpdated -= 1
+		case u := <-results:
+			leftNotUpdated--
+			fileList[u.i] = *u.item
 		case <-timeout:
 			leftNotUpdated = 0
 		}

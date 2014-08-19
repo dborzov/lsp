@@ -10,7 +10,7 @@ type FileInfo struct {
 }
 
 // InvestigateFile prepares detailed file/directory summary
-func (fi FileInfo) InvestigateFile(prev *FileInfo, updated chan fileInfoUpdater) {
+func (fi FileInfo) InvestigateFile(i int, updated chan fileInfoUpdater) {
 
-	updated <- fileInfoUpdater([2]*FileInfo{prev, &fi})
+	updated <- fileInfoUpdater(fileInfoUpdater{i, &fi})
 }
