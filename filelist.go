@@ -13,12 +13,12 @@ type fileInfoUpdater struct {
 	item *FileInfo
 }
 
-type byType []os.FileInfo
+type byType []FileInfo
 
 func (a byType) Len() int      { return len(a) }
 func (a byType) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
 func (a byType) Less(i, j int) bool {
-	if a[i].IsDir() && !a[j].IsDir() {
+	if a[i].f.IsDir() && !a[j].f.IsDir() {
 		return true
 	}
 	return false
