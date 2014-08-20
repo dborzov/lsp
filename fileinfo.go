@@ -2,7 +2,10 @@
 // of individual file/folder in the list and methods to fetch this info
 package main
 
-import "os"
+import (
+	"os"
+	"path/filepath"
+)
 
 // FileInfo is to store everything known about the file object
 type FileInfo struct {
@@ -17,6 +20,12 @@ func (fi FileInfo) InvestigateFile(i int, updated chan fileInfoUpdater) {
 	switch {
 	case m&os.ModeSymlink != 0:
 		fi.special = "[yellow](symlink)"
+		link, err := filepath.EvalSymlinks(mode.targetPath + "/" + fi.f.Name())
+		if err == nil {
+			fi.description = "link: [green]" + link
+		} else {
+			fi.description = "got error trying to resolve symlink"
+		}
 	case m&os.ModeDevice != 0:
 		fi.special = "[yellow](device)"
 	case m&os.ModeNamedPipe != 0:

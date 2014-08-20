@@ -10,14 +10,15 @@ import (
 )
 
 const (
-	briefcaseRune = '💼'
-	gitRune       = '😻'
-	musicRune     = '🎼'
-	pythonRune    = '🐍'
-	javaRune      = '🍵'
-	documentRune  = '📄'
-	commonPrefix  = "   [blue]./"
-	columnSize    = 20 // characters in the filename column
+	briefcaseRune     = '💼'
+	gitRune           = '😻'
+	musicRune         = '🎼'
+	pythonRune        = '🐍'
+	javaRune          = '🍵'
+	documentRune      = '📄'
+	commonPrefix      = "   [blue]./"
+	descriptionIndent = "                "
+	columnSize        = 30 // characters in the filename column
 )
 
 func render() {
@@ -28,5 +29,8 @@ func render() {
 			fmt.Printf(strings.Repeat(" ", indentSize) + "") // indent
 		}
 		fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", fl.special))) // column 2
+		if fl.description != "" {
+			fmt.Printf(c.Color(descriptionIndent + fmt.Sprintf("[blue]%s[white]\n", fl.description))) // description line
+		}
 	}
 }
