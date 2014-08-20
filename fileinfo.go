@@ -6,8 +6,9 @@ import "os"
 
 // FileInfo is to store everything known about the file object
 type FileInfo struct {
-	f       os.FileInfo
-	special string // symlinks, device files and named pipes or unix domain sockets description
+	f           os.FileInfo
+	special     string // description for symlinks, device files and named pipes or unix domain sockets, empty otherwise
+	description string
 }
 
 // InvestigateFile prepares detailed file/directory summary
@@ -24,6 +25,12 @@ func (fi FileInfo) InvestigateFile(i int, updated chan fileInfoUpdater) {
 	}
 	if m&os.ModeSocket != 0 {
 		fi.special = "[yellow](unix domain socket)"
+	}
+	if m&os.ModeAppend != 0 {
+		fi.special = "[yellow](append-only file)"
+	}
+	if m&os.ModeExclusive != 0 {
+		fi.special = "[yellow](exclusive-use file)"
 	}
 	updated <- fileInfoUpdater(fileInfoUpdater{i, &fi})
 }
