@@ -23,8 +23,10 @@ const (
 func render() {
 	sort.Sort(byType(FileList))
 	for _, fl := range FileList {
-		fmt.Printf(c.Color(commonPrefix + fmt.Sprintf("[white]%s[blue]", fl.f.Name())))      // column 1
-		fmt.Printf(strings.Repeat(" ", columnSize-utf8.RuneCount([]byte(fl.f.Name()))) + "") // indent
-		fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", fl.special)))                     // column 2
+		fmt.Printf(c.Color(commonPrefix + fmt.Sprintf("[white]%s[blue]", fl.f.Name()))) // column 1
+		if indentSize := columnSize - utf8.RuneCount([]byte(fl.f.Name())); indentSize > 0 {
+			fmt.Printf(strings.Repeat(" ", indentSize) + "") // indent
+		}
+		fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", fl.special))) // column 2
 	}
 }

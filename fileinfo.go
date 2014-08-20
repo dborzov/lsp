@@ -12,7 +12,18 @@ type FileInfo struct {
 
 // InvestigateFile prepares detailed file/directory summary
 func (fi FileInfo) InvestigateFile(i int, updated chan fileInfoUpdater) {
-	fi.special = fi.f.Mode().String()
-
+	m := fi.f.Mode()
+	if m&os.ModeSymlink != 0 {
+		fi.special = "[yellow](symlink)"
+	}
+	if m&os.ModeDevice != 0 {
+		fi.special = "[yellow](device)"
+	}
+	if m&os.ModeNamedPipe != 0 {
+		fi.special = "[yellow](unix named pipe)"
+	}
+	if m&os.ModeSocket != 0 {
+		fi.special = "[yellow](unix domain socket)"
+	}
 	updated <- fileInfoUpdater(fileInfoUpdater{i, &fi})
 }
