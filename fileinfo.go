@@ -14,22 +14,18 @@ type FileInfo struct {
 // InvestigateFile prepares detailed file/directory summary
 func (fi FileInfo) InvestigateFile(i int, updated chan fileInfoUpdater) {
 	m := fi.f.Mode()
-	if m&os.ModeSymlink != 0 {
+	switch {
+	case m&os.ModeSymlink != 0:
 		fi.special = "[yellow](symlink)"
-	}
-	if m&os.ModeDevice != 0 {
+	case m&os.ModeDevice != 0:
 		fi.special = "[yellow](device)"
-	}
-	if m&os.ModeNamedPipe != 0 {
+	case m&os.ModeNamedPipe != 0:
 		fi.special = "[yellow](unix named pipe)"
-	}
-	if m&os.ModeSocket != 0 {
+	case m&os.ModeSocket != 0:
 		fi.special = "[yellow](unix domain socket)"
-	}
-	if m&os.ModeAppend != 0 {
+	case m&os.ModeAppend != 0:
 		fi.special = "[yellow](append-only file)"
-	}
-	if m&os.ModeExclusive != 0 {
+	case m&os.ModeExclusive != 0:
 		fi.special = "[yellow](exclusive-use file)"
 	}
 	updated <- fileInfoUpdater(fileInfoUpdater{i, &fi})
