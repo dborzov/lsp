@@ -18,6 +18,21 @@ type Node struct {
 	Fls []*FileInfo      //files on this node
 }
 
+// GetNode returns children node with 'key' key. if such a node does not exist yet, it is created first
+func (n *Node) GetNode(key string) *Node {
+	if n.Ch == nil {
+		n.Ch = make(map[string]*Node)
+	}
+	node, ok := n.Ch[key]
+	if ok {
+		return node
+	}
+	n.Ch = map[string]*Node{
+		key: &Node{},
+	}
+	return n.Ch[key]
+}
+
 // Trie contains classified files
 var Trie = Node{
 	Ch: map[string]*Node{
@@ -38,7 +53,8 @@ func populateTrie() {
 		case "dir":
 			Trie.Ch["dirs"].Fls = append(Trie.Ch["dirs"].Fls, &f)
 		default:
-			Trie.Ch["specials"].Fls = append(Trie.Ch["specials"].Fls, &f)
+			n := Trie.Ch["special"].GetNode(f.special)
+			n.Fls = append(n.Fls, &f)
 		}
 	}
 }
