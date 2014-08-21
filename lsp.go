@@ -19,5 +19,6 @@ func main() {
 	}
 
 	FileList = researchFileList(files)
+	populateTrie()
 	render()
 }

@@ -19,7 +19,7 @@ func (fi FileInfo) InvestigateFile(i int, updated chan fileInfoUpdater) {
 	m := fi.f.Mode()
 	switch {
 	case m&os.ModeSymlink != 0:
-		fi.special = "[yellow](symlink)"
+		fi.special = "symlink"
 		link, err := filepath.EvalSymlinks(mode.targetPath + "/" + fi.f.Name())
 		if err == nil {
 			fi.description = "link: [green]" + link // will eventually use strings.TrimPrefix to shorten for things like homepath
@@ -27,15 +27,17 @@ func (fi FileInfo) InvestigateFile(i int, updated chan fileInfoUpdater) {
 			fi.description = "got error trying to resolve symlink"
 		}
 	case m&os.ModeDevice != 0:
-		fi.special = "[yellow](device)"
+		fi.special = "device"
 	case m&os.ModeNamedPipe != 0:
-		fi.special = "[yellow](unix named pipe)"
+		fi.special = "unix named pipe"
 	case m&os.ModeSocket != 0:
-		fi.special = "[yellow](unix domain socket)"
+		fi.special = "unix domain socket"
 	case m&os.ModeAppend != 0:
-		fi.special = "[yellow](append-only file)"
+		fi.special = "append-only file"
 	case m&os.ModeExclusive != 0:
-		fi.special = "[yellow](exclusive-use file)"
+		fi.special = "exclusive-use file"
+	case m&os.ModeDir != 0:
+		fi.special = "dir"
 	}
 	updated <- fileInfoUpdater(fileInfoUpdater{i, &fi})
 }
