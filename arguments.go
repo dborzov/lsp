@@ -4,7 +4,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	filepath "path/filepath"
 )
@@ -51,6 +50,5 @@ func parseArguments() error {
 	}
 
 	mode.targetPath, err = filepath.Abs(mode.inputPath)
-	fmt.Printf("Reading directory: \"%s\"\n", mode.targetPath)
 	return err
 }

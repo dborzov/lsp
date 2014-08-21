@@ -38,4 +38,9 @@ func render() {
 			fmt.Printf(c.Color(descriptionIndent + fmt.Sprintf("[blue]%s[white]\n", fl.description))) // description line
 		}
 	}
+
+	// summary
+	fmt.Printf(c.Color("\n[cyan]" + strings.Repeat("-", 3*columnSize) + "\n"))
+	fmt.Printf(c.Color("    lsp \"[red]%s[white]\"\n"), mode.targetPath)
+	fmt.Printf(c.Color("     [red]%v[white] files, [red]%v[white] directories \n\n"), len(FileList), len(FileList))
 }
