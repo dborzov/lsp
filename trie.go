@@ -27,9 +27,7 @@ func (n *Node) GetNode(key string) *Node {
 	if ok {
 		return node
 	}
-	n.Ch = map[string]*Node{
-		key: &Node{},
-	}
+	n.Ch[key] = &Node{}
 	return n.Ch[key]
 }
 
