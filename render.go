@@ -24,6 +24,7 @@ const (
 
 func render() {
 	sort.Sort(byType(FileList))
+	fmt.Printf("\n") // i like empty line before the list
 	for _, fl := range FileList {
 		displayFileName := fl.f.Name()
 		if utf8.RuneCount([]byte(displayFileName)) > maxFileNameSize {
