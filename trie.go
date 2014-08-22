@@ -31,6 +31,25 @@ func (n *Node) GetNode(key string) *Node {
 	return n.Ch[key]
 }
 
+type traversePos struct {
+	Fls  []*FileInfo
+	Keys []string
+}
+
+// Walk traverses node DFS-style and sends non-empty n.Fls to channel ch
+func (n *Node) Walk(ch chan traversePos, keys []string) {
+	if n.Fls != nil && len(n.Fls) > 0 {
+		ch <- traversePos{n.Fls, keys}
+	}
+	if n.Ch == nil {
+		return
+	}
+
+	for k, childNode := range n.Ch {
+		childNode.Walk(ch, append(keys, k))
+	}
+}
+
 // Trie contains classified files
 var Trie = Node{
 	Ch: map[string]*Node{
