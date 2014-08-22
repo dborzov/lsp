@@ -30,10 +30,17 @@ func render() {
 		if utf8.RuneCount([]byte(displayFileName)) > maxFileNameSize {
 			displayFileName = string([]rune(displayFileName)[0:maxFileNameSize]) + "[magenta][...]"
 		}
-		fmt.Printf(c.Color(commonPrefix + fmt.Sprintf("[white]%s[blue]", displayFileName))) // column 1
+
+		//indent
 		if indentSize := columnSize - utf8.RuneCount([]byte(displayFileName)); indentSize > 0 {
 			fmt.Printf(strings.Repeat(" ", indentSize) + "") // indent
 		}
+
+		fmt.Printf(c.Color(commonPrefix + fmt.Sprintf("[white]%s[blue]", displayFileName))) // column 1
+
+		// central dividing space
+		fmt.Printf("  ")
+
 		fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", fl.special))) // column 2
 		if fl.description != "" {
 			fmt.Printf(c.Color(descriptionIndent + fmt.Sprintf("[blue]%s[white]\n", fl.description))) // description line
@@ -43,5 +50,5 @@ func render() {
 	// summary
 	fmt.Printf(c.Color("\n[cyan]" + strings.Repeat("-", 3*columnSize) + "\n"))
 	fmt.Printf(c.Color("    lsp \"[red]%s[white]\"\n"), mode.targetPath)
-	fmt.Printf(c.Color("     [red]%v[white] files, [red]%v[white] directories \n\n"), len(FileList), len(FileList))
+	fmt.Printf(c.Color("     [red]%v[white] files, [red]%v[white] directories \n\n"), len(FileList), len(Trie.Ch["dirs"].Fls))
 }
