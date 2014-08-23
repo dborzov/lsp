@@ -31,6 +31,11 @@ func (n *Node) GetNode(key string) *Node {
 	return n.Ch[key]
 }
 
+// AddFile adds file reference to Node's file list (while initializing file if needed)
+func (n *Node) AddFile(fl *FileInfo) {
+
+}
+
 type traversePos struct {
 	Fls  []*FileInfo
 	Keys []string
@@ -63,15 +68,17 @@ var Trie = Node{
 	}}
 
 func populateTrie() {
+	var n *Node
 	for _, f := range FileList {
 		switch f.special {
 		case "":
-			Trie.Ch["regulars"].Ch["text"].Fls = append(Trie.Ch["regulars"].Ch["text"].Fls, &f)
+			n = Trie.GetNode("regulars").GetNode("text")
 		case "dir":
-			Trie.Ch["dirs"].Fls = append(Trie.Ch["dirs"].Fls, &f)
+			n = Trie.GetNode("dirs")
 		default:
-			n := Trie.Ch["special"].GetNode(f.special)
-			n.Fls = append(n.Fls, &f)
+			n = Trie.Ch["special"].GetNode(f.special)
 		}
+		r := f
+		n.Fls = append(n.Fls, &r)
 	}
 }
