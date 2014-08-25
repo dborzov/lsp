@@ -69,7 +69,7 @@ var Trie = Node{
 
 func populateTrie() {
 	var n *Node
-	for _, f := range FileList {
+	for i, f := range FileList {
 		switch f.special {
 		case "":
 			n = Trie.GetNode("regulars").GetNode("text")
@@ -78,7 +78,6 @@ func populateTrie() {
 		default:
 			n = Trie.Ch["special"].GetNode(f.special)
 		}
-		r := f
-		n.Fls = append(n.Fls, &r)
+		n.Fls = append(n.Fls, &FileList[i])
 	}
 }
