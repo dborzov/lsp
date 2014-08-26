@@ -41,8 +41,8 @@ for all platforms (Linux, MacOS, Windows). No dependancies or anything configura
 ## Misc
 MIT license.
 
-Github Issues and pull requests are very welcome, feel free to [message me](tihoutrom@gmail.com) if you consider contributing.
+Github Issues and pull requests are very welcome, feel free to [message me](tihoutrom@gmail.com) if you are considering contributing.
 
-Th tool is named after Lumpy Space Princess(LSP), a very quotable character from the TV show "Adventure Time with Finn and Jake".
+This tool is named after Lumpy Space Princess(LSP), a very quotable character from the TV show "Adventure Time with Finn and Jake".
 
 ![can't handle these lumps](beans.gif)
