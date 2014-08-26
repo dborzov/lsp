@@ -8,9 +8,11 @@ import "os"
 // FileList maintains current file items to show
 var FileList []FileInfo
 
-type fileInfoUpdater struct {
-	i    int // index
+// FileListUpdate typed channels contain results of Fileinfo elements in FileList resolved asynchroniously
+type FileListUpdate struct {
+	i    int // index of update element
 	item *FileInfo
+	done bool // don't wait for more updates
 }
 
 type byType []FileInfo
@@ -26,7 +28,7 @@ func (a byType) Less(i, j int) bool {
 
 func researchFileList(files []os.FileInfo) []FileInfo {
 	fileList := make([]FileInfo, len(files))
-	results := make(chan fileInfoUpdater)
+	results := make(chan FileListUpdate)
 	for i, f := range files {
 		fileList[i].f = f
 		go fileList[i].InvestigateFile(i, results)
@@ -39,7 +41,9 @@ func researchFileList(files []os.FileInfo) []FileInfo {
 	for leftNotUpdated > 0 {
 		select {
 		case u := <-results:
-			leftNotUpdated--
+			if u.done {
+				leftNotUpdated--
+			}
 			fileList[u.i] = *u.item
 		case <-timeout:
 			leftNotUpdated = 0

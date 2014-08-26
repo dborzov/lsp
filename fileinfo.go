@@ -15,7 +15,7 @@ type FileInfo struct {
 }
 
 // InvestigateFile prepares detailed file/directory summary
-func (fi FileInfo) InvestigateFile(i int, updated chan fileInfoUpdater) {
+func (fi FileInfo) InvestigateFile(i int, updated chan FileListUpdate) {
 	m := fi.f.Mode()
 	switch {
 	case m&os.ModeSymlink != 0:
@@ -39,5 +39,5 @@ func (fi FileInfo) InvestigateFile(i int, updated chan fileInfoUpdater) {
 	case m&os.ModeDir != 0:
 		fi.special = "dir"
 	}
-	updated <- fileInfoUpdater(fileInfoUpdater{i, &fi})
+	updated <- FileListUpdate{i, &fi, true}
 }
