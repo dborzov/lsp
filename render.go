@@ -50,16 +50,5 @@ func renderFiles(fls []*FileInfo) {
 		fmt.Printf("  ")
 
 		fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", fl.description))) // column 2
-		// if fl.description != "" {
-		// 	fmt.Printf(c.Color(fmt.Sprintf("[blue]%s[white]\n", fl.description))) // description line
-		// }
 	}
-}
-
-func printCentered(o string) {
-	length := utf8.RuneCount([]byte(o))
-	sideburns := (6 + 2*columnSize - length) / 2
-	fmt.Printf(strings.Repeat(" ", sideburns))
-	fmt.Printf(c.Color("[red]"+o+"[white]") + "\n")
-
 }

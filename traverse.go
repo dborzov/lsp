@@ -13,7 +13,7 @@ func Traverse() {
 
 	for leave := range ch {
 		fmt.Printf("\n")
-		printCentered(fmt.Sprintf("%v", leave.Keys))
+		printCentered(nameTriePath(leave.Keys))
 		renderFiles(leave.Fls)
 	}
 
