@@ -86,9 +86,15 @@ func populateTrie() {
 
 func nameTriePath(path []string) string {
 	var presetTitles = map[string]string{
-		"dirs":"Directories",
-		"special*symlink":"Symlinks",
-		"regulars*text":"Text files",
+		"dirs":                       "Directories",
+		"regulars":                   "Regular files",
+		"specials":                   "Special Files (Neither Dirs Nor Regulars)",
+		"regulars*text":              "Text Files",
+		"regulars*executables":       "Executables",
+		"regulars*blobs":             "Blobs",
+		"special*device":             "Devices",
+		"special*symlink":            "Symlinks",
+		"special*unix domain socket": "UNIX Domain Socket",
 	}
 	grp := strings.Join(path, "*")
 	if title, ok := presetTitles[grp]; ok {
