@@ -20,6 +20,5 @@ func main() {
 
 	FileList = researchFileList(files)
 	populateTrie()
-	Traverse()
 	render()
 }

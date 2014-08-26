@@ -16,18 +16,22 @@ const (
 	pythonRune        = '🐍'
 	javaRune          = '🍵'
 	documentRune      = '📄'
-	commonPrefix      = "[blue]./"
+	commonPrefix      = "[blue]"
 	descriptionIndent = "                "
-	columnSize        = 30 // characters in the filename column
-	maxFileNameSize   = columnSize - 7
 )
 
 func render() {
+	SetColumnSize()
+	Traverse()
+	renderSummary()
+}
+
+func renderSummary() {
 	sort.Sort(byType(FileList))
 	fmt.Printf("\n") // i like empty line before the list
 
 	// summary
-	fmt.Printf(c.Color("\n[cyan]" + strings.Repeat("-", 3*columnSize) + "\n"))
+	printHR()
 	fmt.Printf(c.Color("    lsp \"[red]%s[white]\"\n"), mode.targetPath)
 	fmt.Printf(c.Color("     [red]%v[white] files, [red]%v[white] directories \n\n"), len(FileList), len(Trie.Ch["dirs"].Fls))
 }
@@ -35,7 +39,7 @@ func render() {
 func renderFiles(fls []*FileInfo) {
 	for _, fl := range fls {
 		displayFileName := fl.f.Name()
-		if utf8.RuneCount([]byte(displayFileName)) > maxFileNameSize {
+		if utf8.RuneCountInString(displayFileName) > maxFileNameSize {
 			displayFileName = string([]rune(displayFileName)[0:maxFileNameSize]) + "[magenta][...]"
 		}
 

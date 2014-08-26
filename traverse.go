@@ -11,6 +11,7 @@ func Traverse() {
 		close(ch)
 	}()
 
+	printHR()
 	for leave := range ch {
 		fmt.Printf("\n")
 		printCentered(nameTriePath(leave.Keys))
