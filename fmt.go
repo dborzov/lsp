@@ -10,12 +10,13 @@ import (
 	c "github.com/mitchellh/colorstring"
 )
 
+const (dashesNumber = 2)
+
 func printCentered(o string) {
 	length := utf8.RuneCount([]byte(o))
-	var sideburns int = (6 + 2*columnSize - length) / 2
+	var sideburns int = (6 + 2*columnSize - length) / 2- dashesNumber
 	fmt.Printf(strings.Repeat(" ", sideburns))
-	fmt.Printf(c.Color("[red]"+o+"[white]") + "\n")
-  fmt.Printf(strings.Repeat(" ", columnSize+1))
-  fmt.Printf(c.Color("[red]~~~~[white]\n"))
-
+  fmt.Printf(c.Color("[red]"+strings.Repeat("-", dashesNumber)))
+	fmt.Printf(c.Color("[red]"+o+"[white]"))
+  fmt.Printf(c.Color("[red]"+strings.Repeat("-", dashesNumber))+"\n")
 }
