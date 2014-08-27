@@ -89,14 +89,14 @@ func nameTriePath(path []string) string {
 		"dirs":                       "Directories",
 		"regulars":                   "Regular files",
 		"specials":                   "Special Files (Neither Dirs Nor Regulars)",
-		"regulars*text":              "Text Files",
-		"regulars*executables":       "Executables",
-		"regulars*blobs":             "Blobs",
-		"special*device":             "Devices",
-		"special*symlink":            "Symlinks",
-		"special*unix domain socket": "UNIX Domain Socket",
+		"regulars>text":              "Text Files",
+		"regulars>executables":       "Executables",
+		"regulars>blobs":             "Blobs",
+		"special>device":             "Devices",
+		"special>symlink":            "Symlinks",
+		"special>unix domain socket": "UNIX Domain Socket",
 	}
-	grp := strings.Join(path, "*")
+	grp := strings.Join(path, ">")
 	if title, ok := presetTitles[grp]; ok {
 		return title
 	}

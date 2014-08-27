@@ -27,7 +27,6 @@ func render() {
 }
 
 func renderSummary() {
-	sort.Sort(byType(FileList))
 	fmt.Printf("\n") // i like empty line before the list
 
 	// summary
@@ -37,6 +36,11 @@ func renderSummary() {
 }
 
 func renderFiles(fls []*FileInfo) {
+	if mode.size {
+		sort.Sort(sizeSort(fls))
+	} else {
+		sort.Sort(alphabeticSort(fls))
+	}
 	for _, fl := range fls {
 		displayFileName := fl.f.Name()
 		if utf8.RuneCountInString(displayFileName) > maxFileNameSize {

@@ -15,17 +15,6 @@ type FileListUpdate struct {
 	done bool // don't wait for more updates
 }
 
-type byType []FileInfo
-
-func (a byType) Len() int      { return len(a) }
-func (a byType) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
-func (a byType) Less(i, j int) bool {
-	if a[i].f.IsDir() && !a[j].f.IsDir() {
-		return true
-	}
-	return false
-}
-
 func researchFileList(files []os.FileInfo) []FileInfo {
 	fileList := make([]FileInfo, len(files))
 	results := make(chan FileListUpdate)
@@ -44,7 +33,9 @@ func researchFileList(files []os.FileInfo) []FileInfo {
 			if u.done {
 				leftNotUpdated--
 			}
-			fileList[u.i] = *u.item
+			if u.item != nil {
+				fileList[u.i] = *u.item
+			}
 		case <-timeout:
 			leftNotUpdated = 0
 		}

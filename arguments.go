@@ -13,6 +13,7 @@ type Mode struct {
 	d          bool   // shows directories only
 	h          bool   // "himan-readable" mode
 	l          bool   // "long" form, more details
+	size       bool   // "show and order by size" mode
 	inputPath  string // path as taken from the argument parsing
 	targetPath string // target path
 }
@@ -35,6 +36,8 @@ func parseArguments() error {
 					f = &mode.h
 				case 'l':
 					f = &mode.l
+				case 's':
+					f = &mode.size
 				}
 				if f != nil {
 					*f = true

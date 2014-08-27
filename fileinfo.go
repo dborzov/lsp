@@ -17,6 +17,7 @@ type FileInfo struct {
 // InvestigateFile prepares detailed file/directory summary
 func (fi FileInfo) InvestigateFile(i int, updated chan FileListUpdate) {
 	m := fi.f.Mode()
+	done := true
 	switch {
 	case m&os.ModeSymlink != 0:
 		fi.special = "symlink"
@@ -38,6 +39,30 @@ func (fi FileInfo) InvestigateFile(i int, updated chan FileListUpdate) {
 		fi.special = "exclusive-use file"
 	case m&os.ModeDir != 0:
 		fi.special = "dir"
+	default:
+		fi.special = "regular"
+		go fi.investigateRegFile(i, updated)
+		done = false
+	}
+
+	updated <- FileListUpdate{i, &fi, done}
+}
+
+func (fi FileInfo) investigateRegFile(i int, updated chan FileListUpdate) {
+	if fi.f.Size() == 0 {
+		fi.description = "Empty File"
+		updated <- FileListUpdate{i, &fi, true}
+		return
+	}
+	isTxt, err := CheckIfTextFile(fi)
+	if err != nil {
+		updated <- FileListUpdate{i, nil, true}
+		return
+	}
+	if isTxt {
+		fi.special = "Text file"
+	} else {
+		fi.special = "Binary file"
 	}
 	updated <- FileListUpdate{i, &fi, true}
 }
