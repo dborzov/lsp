@@ -1,4 +1,4 @@
-// fmt.go, like render.go, contains stuff concerning output formatting in the stdoutt/terminal,
+// fmt.go, complements render.go, containing stuff to format output in the stdoutt/terminal,
 // but fmt.go is for more bash-specific/lower level stuff
 package main
 
@@ -31,7 +31,7 @@ func printCentered(o string) {
 	fmt.Printf(c.Color("[red]"+strings.Repeat("-", dashesNumber)) + "\n")
 }
 
-// SetTerminalSize returns the dimensions of the given terminal.
+// SetColumnSize attempts to read the dimensions of the given terminal.
 func SetColumnSize() {
 	const stdoutFD = 1
 	var dimensions [4]uint16

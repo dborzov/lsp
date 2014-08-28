@@ -56,7 +56,10 @@ func renderFiles(fls []*FileInfo) {
 
 		// central dividing space
 		fmt.Printf("  ")
-
-		fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", fl.description))) // column 2
+		if mode.size {
+			fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", fl.representSize()))) // column 2
+		} else {
+			fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", fl.description))) // column 2
+		}
 	}
 }
