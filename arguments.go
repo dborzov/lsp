@@ -12,8 +12,10 @@ import (
 type Mode struct {
 	d          bool   // shows directories only
 	h          bool   // "himan-readable" mode
-	l          bool   // "long" form, more details
+	long       bool   // "long" form, more details
 	size       bool   // "show and order by size" mode
+	time       bool   // "show and order by modification time" mode
+	pyramid    bool   // align files to the center or to the sides
 	inputPath  string // path as taken from the argument parsing
 	targetPath string // target path
 }
@@ -35,9 +37,13 @@ func parseArguments() error {
 				case 'h':
 					f = &mode.h
 				case 'l':
-					f = &mode.l
+					f = &mode.long
 				case 's':
 					f = &mode.size
+				case 'p':
+					f = &mode.pyramid
+				case 't':
+					f = &mode.time
 				}
 				if f != nil {
 					*f = true
