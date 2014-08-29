@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"sort"
-	"strings"
-	"unicode/utf8"
 
 	c "github.com/mitchellh/colorstring"
 )
@@ -31,7 +29,7 @@ func renderSummary() {
 
 	// summary
 	printHR()
-	fmt.Printf(c.Color("    lsp \"[red]%s[white]\"\n"), mode.targetPath)
+	printCentered(fmt.Sprintf(c.Color("[white]lsp \"[red]%s[white]\""), mode.targetPath))
 	fmt.Printf(c.Color("     [red]%v[white] files, [red]%v[white] directories \n\n"), len(FileList), len(Trie.Ch["dirs"].Fls))
 }
 
@@ -42,24 +40,6 @@ func renderFiles(fls []*FileInfo) {
 		sort.Sort(alphabeticSort(fls))
 	}
 	for _, fl := range fls {
-		displayFileName := fl.f.Name()
-		if utf8.RuneCountInString(displayFileName) > maxFileNameSize {
-			displayFileName = string([]rune(displayFileName)[0:maxFileNameSize]) + "[magenta][...]"
-		}
-
-		//indent
-		if indentSize := columnSize - utf8.RuneCount([]byte(displayFileName)); indentSize > 0 {
-			fmt.Printf(strings.Repeat(" ", indentSize) + "") // indent
-		}
-
-		fmt.Printf(c.Color(commonPrefix + fmt.Sprintf("[white]%s[blue]", displayFileName))) // column 1
-
-		// central dividing space
-		fmt.Printf("  ")
-		if mode.size {
-			fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", fl.representSize()))) // column 2
-		} else {
-			fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", fl.description))) // column 2
-		}
+		PrintColumns(fl.f.Name(), fl.Description())
 	}
 }

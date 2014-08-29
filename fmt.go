@@ -22,6 +22,24 @@ var (
 	maxFileNameSize = columnSize - 7
 )
 
+// PrintColumns prints two-column table row, nicely formatted and shortened if needed
+func PrintColumns(filename, description string) {
+	indentSize := columnSize - utf8.RuneCountInString(filename)
+	if utf8.RuneCountInString(filename) > maxFileNameSize {
+		filename = string([]rune(filename)[0:maxFileNameSize]) + "[magenta][...]"
+	}
+	if mode.pyramid {
+		fmt.Printf(c.Color(commonPrefix + fmt.Sprintf("[white]%s[blue]", filename)))
+		fmt.Printf(strings.Repeat(" ", indentSize))
+	} else {
+		fmt.Printf(strings.Repeat(" ", indentSize))
+		fmt.Printf(c.Color(commonPrefix + fmt.Sprintf("[white]%s[blue]", filename)))
+	}
+	// central dividing space
+	fmt.Printf("  ")
+	fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", description)))
+}
+
 func printCentered(o string) {
 	length := utf8.RuneCount([]byte(o))
 	sideburns := (6+2*columnSize-length)/2 - dashesNumber
