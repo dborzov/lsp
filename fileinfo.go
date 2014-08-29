@@ -4,7 +4,8 @@ package main
 
 import (
 	"os"
-	"strconv"
+
+	humanize "github.com/dustin/go-humanize"
 )
 
 // FileInfo is to store everything known about the file object
@@ -14,6 +15,31 @@ type FileInfo struct {
 	description string
 }
 
+// Description yeilds description line appropriate to the running mode
+func (fi FileInfo) Description() (description string) {
+	switch {
+	case mode.size:
+		description = fi.representSize()
+	case mode.time && mode.long:
+		description = fi.representTimeDetailed()
+	case mode.time:
+		description = fi.representTime()
+
+	default:
+		description = fi.description
+
+	}
+	return
+}
+
 func (fi FileInfo) representSize() string {
-	return strconv.Itoa(int(fi.f.Size()))
+	return humanize.Bytes(uint64(fi.f.Size()))
+}
+
+func (fi FileInfo) representTimeDetailed() string {
+	return humanize.Time(fi.f.ModTime()) + " (" + fi.f.ModTime().String() + ")"
+}
+
+func (fi FileInfo) representTime() string {
+	return humanize.Time(fi.f.ModTime())
 }
