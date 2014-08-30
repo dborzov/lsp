@@ -34,9 +34,12 @@ func renderSummary() {
 }
 
 func renderFiles(fls []*FileInfo) {
-	if mode.size {
+	switch {
+	case mode.size:
 		sort.Sort(sizeSort(fls))
-	} else {
+	case mode.time:
+		sort.Sort(timeSort(fls))
+	default:
 		sort.Sort(alphabeticSort(fls))
 	}
 	for _, fl := range fls {

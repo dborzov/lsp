@@ -23,3 +23,11 @@ func (a sizeSort) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
 func (a sizeSort) Less(i, j int) bool {
 	return a[i].f.Size() > a[j].f.Size()
 }
+
+type timeSort []*FileInfo
+
+func (a timeSort) Len() int      { return len(a) }
+func (a timeSort) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+func (a timeSort) Less(i, j int) bool {
+	return a[i].f.ModTime().After(a[j].f.ModTime())
+}
