@@ -41,7 +41,7 @@ func PrintColumns(filename, description string) {
 }
 
 func printCentered(o string) {
-	length := utf8.RuneCount([]byte(o))
+	length := utf8.RuneCountInString(o)
 	sideburns := (6+2*columnSize-length)/2 - dashesNumber
 	fmt.Printf(strings.Repeat(" ", sideburns))
 	fmt.Printf(c.Color("[red]" + strings.Repeat("-", dashesNumber)))
