@@ -25,6 +25,9 @@ var (
 // PrintColumns prints two-column table row, nicely formatted and shortened if needed
 func PrintColumns(filename, description string) {
 	indentSize := columnSize - utf8.RuneCountInString(filename)
+	if indentSize < 0 {
+		indentSize = 0
+	}
 	if utf8.RuneCountInString(filename) > maxFileNameSize {
 		filename = string([]rune(filename)[0:maxFileNameSize]) + "[magenta][...]"
 	}
@@ -43,6 +46,9 @@ func PrintColumns(filename, description string) {
 func printCentered(o string) {
 	length := utf8.RuneCountInString(o)
 	sideburns := (6+2*columnSize-length)/2 - dashesNumber
+	if sideburns < 0 {
+		sideburns = 0
+	}
 	fmt.Printf(strings.Repeat(" ", sideburns))
 	fmt.Printf(c.Color("[red]" + strings.Repeat("-", dashesNumber)))
 	fmt.Printf(c.Color("[red]" + o + "[white]"))
