@@ -66,6 +66,7 @@ var Trie = Node{
 			"executables": &Node{},
 			"blobs":       &Node{},
 			"text":        &Node{},
+			"empty":       &Node{},
 		}},
 	}}
 
@@ -75,10 +76,12 @@ func populateTrie() {
 		switch f.special {
 		case "":
 			n = Trie.GetNode("regulars")
-		case "Text file":
+		case "Text File":
 			n = Trie.GetNode("regulars").GetNode("text")
-		case "Binary file":
+		case "Binary File":
 			n = Trie.GetNode("regulars").GetNode("blobs")
+		case "Empty File":
+			n = Trie.GetNode("regulars").GetNode("empty")
 		case "dir":
 			n = Trie.GetNode("dirs")
 		default:
@@ -96,6 +99,7 @@ func nameTriePath(path []string) string {
 		"regulars>text":              "Text Files",
 		"regulars>executables":       "Executables",
 		"regulars>blobs":             "Blobs",
+		"regulars>empty":             "Empty Files",
 		"special>device":             "Devices",
 		"special>symlink":            "Symlinks",
 		"special>unix domain socket": "UNIX Domain Socket",

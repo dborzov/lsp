@@ -48,6 +48,7 @@ func (fi FileInfo) InvestigateFile(i int, updated chan FileListUpdate) {
 func (fi FileInfo) investigateRegFile(i int, updated chan FileListUpdate) {
 	if fi.f.Size() == 0 {
 		fi.description = "Empty File"
+		fi.special = "Empty File"
 		updated <- FileListUpdate{i, &fi, true}
 		return
 	}
@@ -57,9 +58,9 @@ func (fi FileInfo) investigateRegFile(i int, updated chan FileListUpdate) {
 		return
 	}
 	if isTxt {
-		fi.special = "Text file"
+		fi.special = "Text File"
 	} else {
-		fi.special = "Binary file"
+		fi.special = "Binary File"
 	}
 	updated <- FileListUpdate{i, &fi, true}
 }
