@@ -74,7 +74,11 @@ func populateTrie() {
 	for i, f := range FileList {
 		switch f.special {
 		case "":
+			n = Trie.GetNode("regulars")
+		case "Text file":
 			n = Trie.GetNode("regulars").GetNode("text")
+		case "Binary file":
+			n = Trie.GetNode("regulars").GetNode("blobs")
 		case "dir":
 			n = Trie.GetNode("dirs")
 		default:
