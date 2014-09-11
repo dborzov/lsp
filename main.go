@@ -9,7 +9,7 @@ import (
 func main() {
 	err := parseArguments()
 	if err != nil {
-		fmt.Printf("Unable to find directory %s \n", mode.inputPath)
+		fmt.Printf("Unable to find directory %s \n", presentPath(mode.inputPath))
 		return
 	}
 	files, err := ioutil.ReadDir(mode.targetPath)

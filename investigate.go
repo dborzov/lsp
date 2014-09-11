@@ -20,7 +20,7 @@ func (fi FileInfo) InvestigateFile(i int, updated chan FileListUpdate) {
 		fi.special = "symlink"
 		link, err := filepath.EvalSymlinks(mode.targetPath + "/" + fi.f.Name())
 		if err == nil {
-			fi.description = "link: [green]" + link // will eventually use strings.TrimPrefix to shorten for things like homepath
+			fi.description = "link: [green]" + presentPath(link) // will eventually use strings.TrimPrefix to shorten for things like homepath
 		} else {
 			fi.description = "got error trying to resolve symlink"
 		}
