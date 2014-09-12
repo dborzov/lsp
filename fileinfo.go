@@ -24,7 +24,11 @@ func (fi FileInfo) Description() (description string) {
 		description = fi.representTimeDetailed()
 	case mode.time:
 		description = fi.representTime()
-
+	case mode.summary:
+		description = fi.special
+		if fi.description != "" {
+			description += "[blue] (" + fi.description + "[blue])"
+		}
 	default:
 		description = fi.description
 

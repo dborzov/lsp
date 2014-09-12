@@ -13,8 +13,10 @@ func Traverse() {
 
 	printHR()
 	for leave := range ch {
-		fmt.Printf("\n")
-		printCentered(nameTriePath(leave.Keys))
+		if !mode.summary {
+			fmt.Printf("\n")
+			printCentered(nameTriePath(leave.Keys))
+		}
 		renderFiles(leave.Fls)
 	}
 

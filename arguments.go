@@ -10,6 +10,7 @@ import (
 
 // Mode reflects running mode with superset of ls flags and target path
 type Mode struct {
+	summary    bool   // no header for file group, file type in desscription column
 	d          bool   // shows directories only
 	h          bool   // "himan-readable" mode
 	long       bool   // "long" form, more details
@@ -58,6 +59,7 @@ func parseArguments() error {
 		}
 	}
 
+	mode.summary = !(mode.time || mode.size || mode.long)
 	mode.targetPath, err = filepath.Abs(mode.inputPath)
 	return err
 }
