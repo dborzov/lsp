@@ -43,16 +43,24 @@ func PrintColumns(filename, description string) {
 	fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", description)))
 }
 
-func printCentered(o string) {
+func printHeader(o string) {
 	length := utf8.RuneCountInString(o)
 	sideburns := (6+2*columnSize-length)/2 - dashesNumber
 	if sideburns < 0 {
 		sideburns = 0
 	}
 	fmt.Printf(strings.Repeat(" ", sideburns))
-	fmt.Printf(c.Color("[red]" + strings.Repeat("-", dashesNumber)))
-	fmt.Printf(c.Color("[red]" + o + "[white]"))
-	fmt.Printf(c.Color("[red]"+strings.Repeat("-", dashesNumber)) + "\n")
+	fmt.Printf(c.Color("[yellow]" + strings.Repeat("-", dashesNumber) + o + strings.Repeat("-", dashesNumber) + "[white]\n"))
+}
+
+func printCentered(o string) {
+	length := utf8.RuneCountInString(o)
+	sideburns := (6 + 2*columnSize - length) / 2
+	if sideburns < 0 {
+		sideburns = 0
+	}
+	fmt.Printf(strings.Repeat(" ", sideburns))
+	fmt.Printf(c.Color("[yellow]" + o + "[white]\n"))
 }
 
 // SetColumnSize attempts to read the dimensions of the given terminal.
@@ -71,5 +79,5 @@ func SetColumnSize() {
 }
 
 func printHR() {
-	fmt.Printf(c.Color("\n[cyan]" + strings.Repeat("-", terminalWidth) + "\n"))
+	fmt.Printf(c.Color("[cyan]" + strings.Repeat("-", terminalWidth) + "\n"))
 }

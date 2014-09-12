@@ -25,12 +25,8 @@ func render() {
 }
 
 func renderSummary() {
-	fmt.Printf("\n") // i like empty line before the list
-
-	// summary
 	printHR()
-	printCentered(fmt.Sprintf(c.Color("[white]lsp \"[red]%s[white]\""), presentPath(mode.targetPath)))
-	fmt.Printf(c.Color("     [red]%v[white] files, [red]%v[white] directories \n\n"), len(FileList), len(Trie.Ch["dirs"].Fls))
+	printCentered(fmt.Sprintf(c.Color("[white]lsp \"[red]%s[white]\""), presentPath(mode.targetPath)) + fmt.Sprintf(c.Color(", [red]%v[white] files, [red]%v[white] directories\n\n"), len(FileList), len(Trie.Ch["dirs"].Fls)))
 }
 
 func renderFiles(fls []*FileInfo) {
