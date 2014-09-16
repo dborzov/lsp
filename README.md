@@ -33,7 +33,9 @@ For now, there is `-p` key to render the file table in the left-aligned columns:
 
 ## Todo before v1.0
 - Think about how to represent file rights and ownership
+- too long filenames break things
 - Show executable files
+- Add tests once I settle on functionality
 - Think of TODO list points
 
 
