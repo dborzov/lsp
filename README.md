@@ -21,10 +21,11 @@ Files grouped by type (with `-l` key or in modes when file type not shown). `lsp
 #### Modification time in human-friendly format
 `-t` key for when you are interested in modification time. It turns to the mode that makes most sense to me when I want to look up modtimes, sorted within file groups from recent to latest:
 ![](https://raw.githubusercontent.com/dborzov/lsp/screenshots/modtime.png)
+Sometimes relative times are  not very readible as well (like when you are interested in a specific date), use two flags `-sl` to show the full UTC timestamp in properties.
 #### Size in human-friendly format
 `-s` key, similarly to modtime key, shows file sizes and sorts within file groups from largest to smallest:
 ![](https://raw.githubusercontent.com/dborzov/lsp/screenshots/size.png)
-Sometimes it is not very readible as well (like when you are interested in a specific date), use two flags `-sl` to also show full UTC timestamp in properties.
+
 #### Align by left
 I have been playing with aligning files and descriptions by center, and I like that you can see files with the same extension right away, but there are deifinitely cases when it gets weird.
 For now, there is `-p` key to render the file table in the left-aligned columns:
