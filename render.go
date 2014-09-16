@@ -26,7 +26,10 @@ func render() {
 
 func renderSummary() {
 	printHR()
-	printCentered(fmt.Sprintf(c.Color("[white]lsp \"[red]%s[white]\""), presentPath(mode.targetPath)) + fmt.Sprintf(c.Color(", [red]%v[white] files, [red]%v[white] directories\n\n"), len(FileList), len(Trie.Ch["dirs"].Fls)))
+	printCentered(fmt.Sprintf(c.Color("[white]lsp \"[red]%s[white]\""), presentPath(mode.targetPath)) + fmt.Sprintf(c.Color(", [red]%v[white] files, [red]%v[white] directories"), len(FileList), len(Trie.Ch["dirs"].Fls)))
+	for _, cm := range mode.comments {
+		printCentered(cm)
+	}
 }
 
 func renderFiles(fls []*FileInfo) {
@@ -39,6 +42,8 @@ func renderFiles(fls []*FileInfo) {
 		sort.Sort(alphabeticSort(fls))
 	}
 	for _, fl := range fls {
-		PrintColumns(fl.f.Name(), fl.Description())
+		if !fl.hidden {
+			PrintColumns(fl.f.Name(), fl.Description())
+		}
 	}
 }

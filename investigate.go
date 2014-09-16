@@ -3,8 +3,13 @@
 package main
 
 import (
+	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
+
+	c "github.com/mitchellh/colorstring"
 )
 
 const (

@@ -19,6 +19,7 @@ type Mode struct {
 	pyramid    bool   // align files to the center or to the sides
 	inputPath  string // path as taken from the argument parsing
 	targetPath string // target path
+	comments   []string
 }
 
 const flagDash = '-'
