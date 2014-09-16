@@ -13,6 +13,7 @@ type FileInfo struct {
 	f           os.FileInfo
 	special     string // description for symlinks, device files and named pipes or unix domain sockets, empty otherwise
 	description string
+	hidden      bool
 }
 
 // Description yeilds description line appropriate to the running mode
