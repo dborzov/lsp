@@ -24,8 +24,9 @@ Files grouped by type (with `-l` key or in modes when file type not shown). `lsp
 #### Size in human-friendly format
 `-s` key, similarly to modtime key, shows file sizes and sorts within file groups from largest to smallest:
 ![](https://raw.githubusercontent.com/dborzov/lsp/screenshots/size.png)
+Sometimes it is not very readible as well (like when you are interested in a specific date), use two flags `-sl` to also show full UTC timestamp in properties.
 #### Align by left
-I have been playing with aligning files and descriptions by center, and I like that you can see files with the same resolution right away, but there are deifinitely cases when it gets weird.
+I have been playing with aligning files and descriptions by center, and I like that you can see files with the same extension right away, but there are deifinitely cases when it gets weird.
 For now, there is `-p` key to render the file table in the left-aligned columns:
 ![](https://raw.githubusercontent.com/dborzov/lsp/screenshots/table.png)
 
