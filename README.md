@@ -1,7 +1,7 @@
 ## lsp: list files in a mildly human-frendlier manner
 
-`lsp` is like [`ls`](http://en.wikipedia.org/wiki/Ls) command,
-but does not attempt to meet
+`lsp` lists files, like [`ls`](http://en.wikipedia.org/wiki/Ls) command,
+but it does not attempt to meet
 that archaic POSIX specification, so instead of this:
 ```
 (bash)$ ls -l
@@ -12,20 +12,29 @@ total 16
 ```
 
 you get this:
-
-```
- ( I will eventually need to put a sublime-style gif showcasing major features here)
-```
+![screenshot](symlinks.png)
 
 ## Features
-- We get files intelligently grouped by their type and purpose. Directories, symlinks and weird stuff like UNIX device files all grouped together and labeled sensibly.
-- [ ] embraces and extends the original `ls` syntax (with flags and all)
-whenever it does not actively interfere with common sense.
-- [ ] fuzzy matching and fixes basic typos: `lsp ~/.bahs_profile` will still get you there.
-- [ ] shows intelligent summaries for objects: things like sizes and types of subfolders, file's encoding and so on.
-General running timeout threshold means no freezes because of things like suddenly unmounted devices, huge number of files and so on.
-Each file is "investigated" asyncroneously and subdirectories are traversed in the async [BFS](http://en.wikipedia.org/wiki/Breadth-first_search).
-- [ ] knows what things like a git repo is. shows recent git diffs and all the other things.
+#### File Groups
+Files grouped by type (with `-l` key or in modes when file type not shown). `lsp` distinguishes binary, text and executable files, symlinks and is aware of weird types like devices and unix socket thingy:
+![lsp can show files grouped by type](grouped.png)
+#### Modification time in human-friendly format
+`-t` key for when you are interested in modification time. It turns to the mode that makes most sense to me when I want to look up modtimes, sorted within file groups from recent to latest:
+![](modtime.png)
+#### Size in human-friendly format
+`-s` key, similarly to modtime key, shows file sizes and sorts within file groups from largest to smallest:
+![](size.png)
+#### Align by left
+I have been playing with aligning files and descriptions by center, and I like that you can see files with the same resolution right away, but there are deifinitely cases when it gets weird.
+For now, there is `-p` key to render the file table in the left-aligned columns:
+![](table.png)
+
+
+## Todo before v1.0
+- Think about how to represent file rights and ownership
+- Show executable files
+- Think of TODO list points
+
 
 ## Installation
 
