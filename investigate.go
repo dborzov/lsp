@@ -39,8 +39,19 @@ func (fi FileInfo) InvestigateFile(i int, updated chan FileListUpdate) {
 		fi.special = "append-only file"
 	case m&os.ModeExclusive != 0:
 		fi.special = "exclusive-use file"
+	case fi.f.Name() == ".git":
+		fi.hidden = true
+		remote := investigateGit(mode.targetPath)
+		if remote != "" {
+			mode.comments = append(mode.comments, "git repo (remote at "+remote+")")
+		} else {
+			mode.comments = append(mode.comments, "git repo")
+		}
 	case m&os.ModeDir != 0:
 		fi.special = "dir"
+		go fi.investigateDir(i, updated)
+		done = false
+
 	default:
 		fi.special = "regular"
 		go fi.investigateRegFile(i, updated)
@@ -66,6 +77,20 @@ func (fi FileInfo) investigateRegFile(i int, updated chan FileListUpdate) {
 		fi.special = "Text File"
 	} else {
 		fi.special = "Binary File"
+	}
+	updated <- FileListUpdate{i, &fi, true}
+}
+
+func (fi FileInfo) investigateDir(i int, updated chan FileListUpdate) {
+	files, err := ioutil.ReadDir(mode.targetPath + "/" + fi.f.Name())
+	if err != nil {
+		updated <- FileListUpdate{i, &fi, true}
+		return
+	}
+	fi.description = fmt.Sprintf(c.Color("[red]%v[white] files inside"), len(files))
+	isgit := investigateGit(mode.targetPath + "/" + fi.f.Name())
+	if isgit != "" {
+		fi.description = isgit
 	}
 	updated <- FileListUpdate{i, &fi, true}
 }
@@ -98,4 +123,22 @@ func CheckIfTextFile(file FileInfo) (bool, error) {
 		}
 	}
 	return true, nil
+}
+
+func investigateGit(path string) string {
+	const UrlLine = "url = "
+	buf, err := ioutil.ReadFile(path + "/.git/config")
+	if err != nil {
+		return ""
+	}
+	cfg := string(buf)
+	i := strings.Index(cfg, UrlLine)
+	if i == -1 {
+		return ""
+	}
+	j := strings.Index(cfg[i:], "\n")
+	if j == -1 {
+		return ""
+	}
+	return "[green]" + cfg[i+len(UrlLine):i+j] + "[yellow]"
 }
