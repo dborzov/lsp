@@ -7,16 +7,7 @@ import (
 	c "github.com/mitchellh/colorstring"
 )
 
-const (
-	briefcaseRune     = '💼'
-	gitRune           = '😻'
-	musicRune         = '🎼'
-	pythonRune        = '🐍'
-	javaRune          = '🍵'
-	documentRune      = '📄'
-	commonPrefix      = "[blue]"
-	descriptionIndent = "                "
-)
+const ()
 
 func render() {
 	SetColumnSize()

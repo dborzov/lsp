@@ -32,11 +32,11 @@ func PrintColumns(filename, description string) {
 		filename = string([]rune(filename)[0:maxFileNameSize]) + "[magenta][...]"
 	}
 	if mode.pyramid {
-		fmt.Printf(c.Color(commonPrefix + fmt.Sprintf("[white]%s[blue]", filename)))
+		fmt.Printf(c.Color(fmt.Sprintf("[white]%s[blue]", filename)))
 		fmt.Printf(strings.Repeat(" ", indentSize))
 	} else {
 		fmt.Printf(strings.Repeat(" ", indentSize))
-		fmt.Printf(c.Color(commonPrefix + fmt.Sprintf("[white]%s[blue]", filename)))
+		fmt.Printf(c.Color(fmt.Sprintf("[white]%s[blue]", filename)))
 	}
 	// central dividing space
 	fmt.Printf("  ")
