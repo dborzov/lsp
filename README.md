@@ -26,6 +26,11 @@ Sometimes relative times are  not very readible as well (like when you are inter
 `-s` key, similarly to modtime key, shows file sizes and sorts within file groups from largest to smallest:
 ![](https://raw.githubusercontent.com/dborzov/lsp/screenshots/size.png)
 
+#### Async Timeout
+The file information is collected asynchronously, BFS-like, with a separate thread for each file and a timeout threshold.
+
+That means that the execution is not going to freeze because of some low-response device driver (like external hard drive or optical drive) or collecting info about a huge directory.
+
 #### Align by left
 I have been playing with aligning files and descriptions by center, and I like that you can see files with the same extension right away, but there are deifinitely cases when it gets weird.
 For now, there is `-p` key to render the file table in the left-aligned columns:
@@ -55,6 +60,7 @@ for all platforms (Linux, MacOS, Windows). No dependancies or anything configura
 MIT license.
 
 Github Issues and pull requests are very welcome, feel free to [message me](tihoutrom@gmail.com) if you are considering contributing.
+See [DEVELOPME.md](DEVELOPME.md) for intro to the codebase
 
 This tool is named after Lumpy Space Princess(LSP), a very quotable character from the TV show "Adventure Time with Finn and Jake".
 
