@@ -39,10 +39,15 @@ For now, there is `-p` key to render the file table in the left-aligned columns:
 
 ## Todo before v1.0
 - Think about how to represent file rights and ownership
-- too long filenames break things
+- Approach hidden and generated files as outlined in [issue#3](https://github.com/dborzov/lsp/issues/3)
+- Expand in this README the general philosophy of the project (tool in the unix way, minimize surprises, nothing's to be configurable)
+- Too long filenames break things
 - Show executable files
 - Add tests once I settle on functionality
 - Think of TODO list points
+
+Github Issues and pull requests are very welcome, feel free to [message me](tihoutrom@gmail.com) if you are considering contributing.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for intro to the codebase
 
 
 ## Installation
@@ -59,8 +64,6 @@ for all platforms (Linux, MacOS, Windows). No dependancies or anything configura
 ## Misc
 MIT license.
 
-Github Issues and pull requests are very welcome, feel free to [message me](tihoutrom@gmail.com) if you are considering contributing.
-See [DEVELOPME.md](DEVELOPME.md) for intro to the codebase
 
 This tool is named after Lumpy Space Princess(LSP), a very quotable character from the TV show "Adventure Time with Finn and Jake".
 
