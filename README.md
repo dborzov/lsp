@@ -44,7 +44,7 @@ For now, there is `-p` key to render the file table in the left-aligned columns:
 - Think about how to represent file rights and ownership
 - Approach hidden and generated files as outlined in [issue#3](https://github.com/dborzov/lsp/issues/3)
 - Better test coverage
-- Expand in this README the general philosophy of the project (tool in the unix way, minimize surprises, nothing's to be configurable)
+- Expand in this README on philosophy of the project (tool in the unix way, minimize surprises, nothing's to be configurable)
 - Think of TODO list points
 
 Github Issues and pull requests are very welcome, feel free to [message me](tihoutrom@gmail.com) if you are considering contributing.
