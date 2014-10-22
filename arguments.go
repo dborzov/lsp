@@ -3,10 +3,9 @@
 //
 package main
 
-import (
-	"os"
-	filepath "path/filepath"
-)
+import filepath "path/filepath"
+
+var mode *Mode
 
 // Mode reflects running mode with superset of ls flags and target path
 type Mode struct {
@@ -24,11 +23,11 @@ type Mode struct {
 
 const flagDash = '-'
 
-var mode = new(Mode)
 var err error
 
-func parseArguments() error {
-	for i, l := range os.Args[1:] {
+func parseArguments(arguments []string) (*Mode, error) {
+	mode = new(Mode)
+	for i, l := range arguments[1:] {
 		if l[0] == flagDash {
 			// this argument seems to be a flag
 			for _, flag := range l[1:] {
@@ -62,5 +61,5 @@ func parseArguments() error {
 
 	mode.summary = !(mode.time || mode.size || mode.long)
 	mode.targetPath, err = filepath.Abs(mode.inputPath)
-	return err
+	return mode, err
 }

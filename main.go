@@ -4,10 +4,11 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 )
 
 func main() {
-	err := parseArguments()
+	mode, err := parseArguments(os.Args)
 	if err != nil {
 		fmt.Printf("Unable to find directory %s \n", presentPath(mode.inputPath))
 		return
