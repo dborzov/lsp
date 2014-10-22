@@ -9,23 +9,30 @@ var mode *Mode
 
 // Mode reflects running mode with superset of ls flags and target path
 type Mode struct {
-	summary    bool   // no header for file group, file type in desscription column
-	d          bool   // shows directories only
-	h          bool   // "himan-readable" mode
-	long       bool   // "long" form, more details
-	size       bool   // "show and order by size" mode
-	time       bool   // "show and order by modification time" mode
-	pyramid    bool   // align files to the center or to the sides
-	inputPath  string // path as taken from the argument parsing
-	targetPath string // target path
-	comments   []string
+	inputPath    string // target path literal from the argument parsing (e.g. "~/hi")
+	absolutePath string // absolute path to the target directory (e.g. "/home/dima/hi")
+	comments     []string
+
+	summary bool // no header for file group, file type in desscription column
+	d       bool // shows directories only
+	h       bool // "himan-readable" mode
+	long    bool // "long" form, more details
+	size    bool // "show and order by size" mode
+	time    bool // "show and order by modification time" mode
+	pyramid bool // align files to the center or to the sides
 }
 
 const flagDash = '-'
 
 var err error
 
-func parseArguments(arguments []string) (*Mode, error) {
+// ParseArguments parses the arguments passed on to `lsp` into
+// mode flags and target dir.
+// There are many excellent libraries that parse flag arguments,
+// but I ended up rewriting my own to enable
+// `ls`-style single letter triggers within one flag
+// (so that `lsp -al` is equivalent to `lsp -a -l` or `lsp -la`)
+func ParseArguments(arguments []string) (*Mode, error) {
 	mode = new(Mode)
 	for i, l := range arguments[1:] {
 		if l[0] == flagDash {
@@ -60,6 +67,6 @@ func parseArguments(arguments []string) (*Mode, error) {
 	}
 
 	mode.summary = !(mode.time || mode.size || mode.long)
-	mode.targetPath, err = filepath.Abs(mode.inputPath)
+	mode.absolutePath, err = filepath.Abs(mode.inputPath)
 	return mode, err
 }

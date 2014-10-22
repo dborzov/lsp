@@ -8,12 +8,12 @@ import (
 )
 
 func main() {
-	mode, err := parseArguments(os.Args)
+	mode, err := ParseArguments(os.Args)
 	if err != nil {
 		fmt.Printf("Unable to find directory %s \n", presentPath(mode.inputPath))
 		return
 	}
-	files, err := ioutil.ReadDir(mode.targetPath)
+	files, err := ioutil.ReadDir(mode.absolutePath)
 	if err != nil {
 		fmt.Printf("Unable to list directory: %s \n", err)
 		return

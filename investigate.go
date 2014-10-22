@@ -23,7 +23,7 @@ func (fi FileInfo) InvestigateFile(i int, updated chan FileListUpdate) {
 	switch {
 	case m&os.ModeSymlink != 0:
 		fi.special = "symlink"
-		link, err := filepath.EvalSymlinks(mode.targetPath + "/" + fi.f.Name())
+		link, err := filepath.EvalSymlinks(mode.absolutePath + "/" + fi.f.Name())
 		if err == nil {
 			fi.description = "link: [green]" + presentPath(link) // will eventually use strings.TrimPrefix to shorten for things like homepath
 		} else {
@@ -41,7 +41,7 @@ func (fi FileInfo) InvestigateFile(i int, updated chan FileListUpdate) {
 		fi.special = "exclusive-use file"
 	case fi.f.Name() == ".git":
 		fi.hidden = true
-		remote := investigateGit(mode.targetPath)
+		remote := investigateGit(mode.absolutePath)
 		if remote != "" {
 			mode.comments = append(mode.comments, "git repo (remote at "+remote+")")
 		} else {
@@ -82,13 +82,13 @@ func (fi FileInfo) investigateRegFile(i int, updated chan FileListUpdate) {
 }
 
 func (fi FileInfo) investigateDir(i int, updated chan FileListUpdate) {
-	files, err := ioutil.ReadDir(mode.targetPath + "/" + fi.f.Name())
+	files, err := ioutil.ReadDir(mode.absolutePath + "/" + fi.f.Name())
 	if err != nil {
 		updated <- FileListUpdate{i, &fi, true}
 		return
 	}
 	fi.description = fmt.Sprintf(c.Color("[red]%v[white] files inside"), len(files))
-	isgit := investigateGit(mode.targetPath + "/" + fi.f.Name())
+	isgit := investigateGit(mode.absolutePath + "/" + fi.f.Name())
 	if isgit != "" {
 		fi.description = isgit
 	}
@@ -106,7 +106,7 @@ func CheckIfTextFile(file FileInfo) (bool, error) {
 		bytesToRead = file.f.Size()
 	}
 
-	fi, err := os.Open(mode.targetPath + "/" + file.f.Name())
+	fi, err := os.Open(mode.absolutePath + "/" + file.f.Name())
 	if err != nil {
 		return false, err
 	}

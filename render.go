@@ -17,7 +17,7 @@ func render() {
 
 func renderSummary() {
 	printHR()
-	printCentered(fmt.Sprintf(c.Color("[white]lsp \"[red]%s[white]\""), presentPath(mode.targetPath)) + fmt.Sprintf(c.Color(", [red]%v[white] files, [red]%v[white] directories"), len(FileList), len(Trie.Ch["dirs"].Fls)))
+	printCentered(fmt.Sprintf(c.Color("[white]lsp \"[red]%s[white]\""), presentPath(mode.absolutePath)) + fmt.Sprintf(c.Color(", [red]%v[white] files, [red]%v[white] directories"), len(FileList), len(Trie.Ch["dirs"].Fls)))
 	for _, cm := range mode.comments {
 		printCentered(cm)
 	}
