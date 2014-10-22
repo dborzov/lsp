@@ -1,4 +1,5 @@
 ## lsp: list files in a mildly human-frendlier manner
+[![Build Status](https://travis-ci.org/dborzov/lsp.svg?branch=master)](https://travis-ci.org/dborzov/lsp)
 
 `lsp` lists files, like [`ls`](http://en.wikipedia.org/wiki/Ls) command,
 but it does not attempt to meet
