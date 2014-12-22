@@ -1,9 +1,9 @@
-// fmt.go, complements render.go, containing stuff to format output in the stdoutt/terminal,
-// but fmt.go is for more bash-specific/lower level stuff
+// fmt.go for sutff to format output in the stdoutt/terminal
 package main
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 	"syscall"
 	"unicode/utf8"
@@ -21,6 +21,36 @@ var (
 	columnSize      = 39 // characters in the filename column
 	maxFileNameSize = columnSize - 7
 )
+
+func render() {
+	SetColumnSize()
+	Traverse()
+	renderSummary()
+}
+
+func renderSummary() {
+	printHR()
+	printCentered(fmt.Sprintf(c.Color("[white]lsp \"[red]%s[white]\""), presentPath(mode.absolutePath)) + fmt.Sprintf(c.Color(", [red]%v[white] files, [red]%v[white] directories"), len(FileList), len(Trie.Ch["dirs"].Fls)))
+	for _, cm := range mode.comments {
+		printCentered(cm)
+	}
+}
+
+func renderFiles(fls []*FileInfo) {
+	switch {
+	case mode.size:
+		sort.Sort(sizeSort(fls))
+	case mode.time:
+		sort.Sort(timeSort(fls))
+	default:
+		sort.Sort(alphabeticSort(fls))
+	}
+	for _, fl := range fls {
+		if !fl.hidden {
+			PrintColumns(fl.f.Name(), fl.Description())
+		}
+	}
+}
 
 // PrintColumns prints two-column table row, nicely formatted and shortened if needed
 func PrintColumns(filename, description string) {
