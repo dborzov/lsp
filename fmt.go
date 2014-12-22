@@ -3,12 +3,14 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"sort"
 	"strings"
 	"syscall"
 	"unicode/utf8"
 	"unsafe"
 
+	isatty "github.com/mattn/go-isatty"
 	c "github.com/mitchellh/colorstring"
 )
 
@@ -19,8 +21,28 @@ const (
 var (
 	terminalWidth   = 80
 	columnSize      = 39 // characters in the filename column
-	maxFileNameSize = columnSize - 7
+	maxFileNameSize = columnSize - 5
 )
+
+// Defines Terminal Coloring Theme
+var ColorScheme, BlankScheme c.Colorize
+
+func init() {
+	ColorScheme = c.Colorize{
+		Colors: map[string]string{
+			"FILENAME":    c.DefaultColors["light_blue"],
+			"META":        c.DefaultColors["red"],
+			"DESCRIPTION": c.DefaultColors["light_yellow"],
+			"HR":          c.DefaultColors["light_cyan"],
+		},
+		Reset:   true,
+		Disable: !isatty.IsTerminal(os.Stdout.Fd()),
+	}
+
+	BlankScheme = ColorScheme
+	BlankScheme.Disable = true
+
+}
 
 func render() {
 	SetColumnSize()
@@ -30,7 +52,7 @@ func render() {
 
 func renderSummary() {
 	printHR()
-	printCentered(fmt.Sprintf(c.Color("[white]lsp \"[red]%s[white]\""), presentPath(mode.absolutePath)) + fmt.Sprintf(c.Color(", [red]%v[white] files, [red]%v[white] directories"), len(FileList), len(Trie.Ch["dirs"].Fls)))
+	printCentered(fmt.Sprintf(ColorScheme.Color("[white]lsp \"[red]%s[white]\""), presentPath(mode.absolutePath)) + fmt.Sprintf(ColorScheme.Color(", [red]%v[white] files, [red]%v[white] directories"), len(FileList), len(Trie.Ch["dirs"].Fls)))
 	for _, cm := range mode.comments {
 		printCentered(cm)
 	}
@@ -54,19 +76,19 @@ func renderFiles(fls []*FileInfo) {
 
 // PrintColumns prints two-column table row, nicely formatted and shortened if needed
 func PrintColumns(filename, description string) {
-	indentSize := columnSize - utf8.RuneCountInString(filename)
-	if indentSize < 0 {
-		indentSize = 0
-	}
+
 	if utf8.RuneCountInString(filename) > maxFileNameSize {
-		filename = string([]rune(filename)[0:maxFileNameSize]) + "[magenta][...]"
+		filename = string([]rune(filename)[0:maxFileNameSize]) + "[META][...]"
 	}
+
+	indentSize := columnSize - utf8.RuneCountInString(BlankScheme.Color(filename))
+
 	if mode.pyramid {
-		fmt.Printf(c.Color(fmt.Sprintf("[white]%s[blue]", filename)))
+		fmt.Printf(ColorScheme.Color(fmt.Sprintf("[FILENAME]%s", filename)))
 		fmt.Printf(strings.Repeat(" ", indentSize))
 	} else {
 		fmt.Printf(strings.Repeat(" ", indentSize))
-		fmt.Printf(c.Color(fmt.Sprintf("[white]%s[blue]", filename)))
+		fmt.Printf(ColorScheme.Color(fmt.Sprintf("[FILENAME]%s", filename)))
 	}
 	// central dividing space
 	fmt.Printf("  ")
@@ -109,5 +131,5 @@ func SetColumnSize() {
 }
 
 func printHR() {
-	fmt.Printf(c.Color("[cyan]" + strings.Repeat("-", terminalWidth) + "\n"))
+	fmt.Printf(ColorScheme.Color("[HR]" + strings.Repeat("-", terminalWidth) + "\n"))
 }
