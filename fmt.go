@@ -25,12 +25,15 @@ var (
 )
 
 // Defines Terminal Coloring Theme
-var ColorScheme, BlankScheme c.Colorize
+var ColorScheme c.Colorize
+
+// BlankScheme color scheme to clear coloring tags
+var BlankScheme c.Colorize
 
 func init() {
 	ColorScheme = c.Colorize{
 		Colors: map[string]string{
-			"FILENAME":    c.DefaultColors["light_blue"],
+			"FILENAME":    c.DefaultColors["light_green"],
 			"META":        c.DefaultColors["red"],
 			"DESCRIPTION": c.DefaultColors["light_yellow"],
 			"HR":          c.DefaultColors["light_cyan"],
