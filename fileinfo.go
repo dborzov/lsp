@@ -28,7 +28,7 @@ func (fi FileInfo) Description() (description string) {
 	case mode.summary:
 		description = fi.special
 		if fi.description != "" {
-			description += "[blue] (" + fi.description + "[blue])"
+			description += "[DEFAULT](" + fi.description + ")"
 		}
 	default:
 		description = fi.description

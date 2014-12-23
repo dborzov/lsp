@@ -33,10 +33,12 @@ var BlankScheme c.Colorize
 func init() {
 	ColorScheme = c.Colorize{
 		Colors: map[string]string{
+			"DEFAULT":     c.DefaultColors["default"],
 			"FILENAME":    c.DefaultColors["light_green"],
 			"META":        c.DefaultColors["red"],
 			"DESCRIPTION": c.DefaultColors["light_yellow"],
 			"HR":          c.DefaultColors["light_cyan"],
+			"NUMBER":      c.DefaultColors["light_red"],
 		},
 		Reset:   true,
 		Disable: !isatty.IsTerminal(os.Stdout.Fd()),
@@ -55,7 +57,7 @@ func render() {
 
 func renderSummary() {
 	printHR()
-	printCentered(fmt.Sprintf(ColorScheme.Color("[white]lsp \"[red]%s[white]\""), presentPath(mode.absolutePath)) + fmt.Sprintf(ColorScheme.Color(", [red]%v[white] files, [red]%v[white] directories"), len(FileList), len(Trie.Ch["dirs"].Fls)))
+	printCentered(fmt.Sprintf(ColorScheme.Color("[DEFAULT]lsp \"[NUMBER]%s[DEFAULT]\""), presentPath(mode.absolutePath)) + fmt.Sprintf(ColorScheme.Color(", [NUMBER]%v[DEFAULT] files, [NUMBER]%v[DEFAULT] directories"), len(FileList), len(Trie.Ch["dirs"].Fls)))
 	for _, cm := range mode.comments {
 		printCentered(cm)
 	}
@@ -95,7 +97,7 @@ func PrintColumns(filename, description string) {
 	}
 	// central dividing space
 	fmt.Printf("  ")
-	fmt.Printf(c.Color(fmt.Sprintf("[red]%s[white]\n", description)))
+	fmt.Printf(ColorScheme.Color(fmt.Sprintf("[DESCRIPTION]%s\n", description)))
 }
 
 func printHeader(o string) {
