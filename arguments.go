@@ -3,7 +3,9 @@
 //
 package main
 
-import filepath "path/filepath"
+import (
+	filepath "path/filepath"
+)
 
 var mode *Mode
 
@@ -59,7 +61,7 @@ func ParseArguments(arguments []string) (*Mode, error) {
 			}
 		} else {
 			// this argument seems to be a part of the target inputPath
-			if i != 0 {
+			if i != 0 { 
 				mode.inputPath = mode.inputPath + " "
 			}
 			mode.inputPath = mode.inputPath + l
@@ -67,6 +69,10 @@ func ParseArguments(arguments []string) (*Mode, error) {
 	}
 
 	mode.summary = !(mode.time || mode.size || mode.long)
+
+    if (mode.inputPath == "") {
+    	mode.inputPath = "."
+    }
 	mode.absolutePath, err = filepath.Abs(mode.inputPath)
 	return mode, err
 }
