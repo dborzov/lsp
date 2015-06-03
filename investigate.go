@@ -25,9 +25,10 @@ func (fi FileInfo) InvestigateFile(i int, updated chan FileListUpdate) {
 		fi.special = "symlink"
 		link, err := filepath.EvalSymlinks(mode.absolutePath + "/" + fi.f.Name())
 		if err == nil {
-			fi.description = "link: [green]" + presentPath(link) // will eventually use strings.TrimPrefix to shorten for things like homepath
+			// will eventually use strings.TrimPrefix to shorten for things like homepath
+			fi.description = "link: [FILENAME]" + presentPath(link) + "[DEFAULT]"
 		} else {
-			fi.description = "got error trying to resolve symlink"
+			fi.description = "got an error trying to resolve symlink"
 		}
 	case m&os.ModeDevice != 0:
 		fi.special = "device"
