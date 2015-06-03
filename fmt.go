@@ -25,7 +25,10 @@ var (
 // Defines Terminal Coloring Theme
 var ColorScheme c.Colorize
 
-// BlankScheme color scheme to clear coloring tags
+// BlankScheme color scheme just deletes all the coloring tags
+// this colorScheme is applied before fetching the string length
+// so that color tags (or color decoding escape symbols )
+// do not screw up column alignment and so on
 var BlankScheme c.Colorize
 
 func init() {
