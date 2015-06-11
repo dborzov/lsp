@@ -13,7 +13,7 @@ var mode *Mode
 type Mode struct {
 	inputPath    string // target path literal from the argument parsing (e.g. "~/hi")
 	absolutePath string // absolute path to the target directory (e.g. "/home/dima/hi")
-	comments     []string
+	comments     []string // free form descriptions of dir in question (like when it is a git repo)
 
 	summary bool // no header for file group, file type in desscription column
 	d       bool // shows directories only
@@ -61,7 +61,7 @@ func ParseArguments(arguments []string) (*Mode, error) {
 			}
 		} else {
 			// this argument seems to be a part of the target inputPath
-			if i != 0 { 
+			if i != 0 {
 				mode.inputPath = mode.inputPath + " "
 			}
 			mode.inputPath = mode.inputPath + l

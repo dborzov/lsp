@@ -108,7 +108,7 @@ func printHeader(o string) {
 		sideburns = 0
 	}
 	fmt.Printf(strings.Repeat(" ", sideburns))
-	fmt.Printf(c.Color("[yellow]" + strings.Repeat("-", dashesNumber) + o + strings.Repeat("-", dashesNumber) + "[white]\n"))
+	fmt.Printf(ColorScheme.Color("[DESCRIPTION]" + strings.Repeat("-", dashesNumber) + o + strings.Repeat("-", dashesNumber) + "[DEFAULT]\n"))
 }
 
 func printCentered(o string) {
@@ -118,7 +118,7 @@ func printCentered(o string) {
 		sideburns = 0
 	}
 	fmt.Printf(strings.Repeat(" ", sideburns))
-	fmt.Printf(c.Color("[yellow]" + o + "[white]\n"))
+	fmt.Printf(ColorScheme.Color(o + "\n"))
 }
 
 func printHR() {

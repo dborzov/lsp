@@ -8,8 +8,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
-	c "github.com/mitchellh/colorstring"
 )
 
 const (
@@ -88,7 +86,7 @@ func (fi FileInfo) investigateDir(i int, updated chan FileListUpdate) {
 		updated <- FileListUpdate{i, &fi, true}
 		return
 	}
-	fi.description = fmt.Sprintf(c.Color("[red]%v[white] files inside"), len(files))
+	fi.description = fmt.Sprintf(ColorScheme.Color("[FILENAME]%v[DEFAULT] files inside"), len(files))
 	isgit := investigateGit(mode.absolutePath + "/" + fi.f.Name())
 	if isgit != "" {
 		fi.description = isgit
@@ -141,5 +139,5 @@ func investigateGit(path string) string {
 	if j == -1 {
 		return ""
 	}
-	return "[green]" + cfg[i+len(UrlLine):i+j] + "[yellow]"
+	return "[FILENAME]" + cfg[i+len(UrlLine):i+j] + "[DEFAULT]"
 }
