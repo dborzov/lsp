@@ -50,7 +50,8 @@ func (fi FileInfo) InvestigateFile(i int, updated chan FileListUpdate) {
 		fi.special = "dir"
 		go fi.investigateDir(i, updated)
 		done = false
-
+	case m&0111 != 0:
+		fi.special = "Executable"
 	default:
 		fi.special = "regular"
 		go fi.investigateRegFile(i, updated)
