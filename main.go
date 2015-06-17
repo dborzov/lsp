@@ -18,6 +18,10 @@ func main() {
 		fmt.Printf("Unable to list directory: %s \n", err)
 		return
 	}
+	if len(files) == 0 {
+		fmt.Printf(ColorScheme.Color(fmt.Sprintf("[META]lsp[DEFAULT]: dir [FILENAME]%s[DEFAULT] is empty\n", mode.absolutePath)))
+		return
+	}
 
 	FileList = researchFileList(files)
 	populateTrie()
