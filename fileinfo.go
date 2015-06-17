@@ -39,6 +39,7 @@ func (fi FileInfo) Description() (description string) {
 
 func (fi FileInfo) representSize() string {
 	return humanize.Bytes(uint64(fi.f.Size()))
+
 }
 
 func (fi FileInfo) representTimeDetailed() string {

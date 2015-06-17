@@ -81,21 +81,49 @@ func (fi FileInfo) investigateRegFile(i int, updated chan FileListUpdate) {
 }
 
 func (fi FileInfo) investigateDir(i int, updated chan FileListUpdate) {
-	files, err := ioutil.ReadDir(mode.absolutePath + "/" + fi.f.Name())
-	if err != nil {
-		updated <- FileListUpdate{i, &fi, true}
-		return
+	filepath := mode.absolutePath + "/" + fi.f.Name()
+
+	fileCount := getNumberOfFilesInDir(filepath)
+	fi.description =  fmt.Sprintf(ColorScheme.Color("[FILENAME]%v[DEFAULT] files"), fileCount)
+
+	if fileCount==-1 {
+		fi.description =  fmt.Sprintf(ColorScheme.Color("can't read its content"))
 	}
 
-	fi.description =  fmt.Sprintf(ColorScheme.Color("[FILENAME]%v[DEFAULT] files inside"), len(files))
-	if len(files)==0 {
+	if fileCount==0 {
 		fi.description =  fmt.Sprintf(ColorScheme.Color("empty one"))
 	}
+
+	if fileCount==1 {
+		fmt.Sprintf(ColorScheme.Color("just one file"))
+	}
+
 	isgit := investigateGit(mode.absolutePath + "/" + fi.f.Name())
 	if isgit != "" {
 		fi.description = isgit
 	}
 	updated <- FileListUpdate{i, &fi, true}
+}
+
+
+func getNumberOfFilesInDir(path string)(count int){
+	files, err := ioutil.ReadDir(path)
+	if err != nil {
+		return -1
+	}
+
+	for _, f:= range files{
+			if f.IsDir() {
+				c := getNumberOfFilesInDir(path + "/" + f.Name())
+				count += c
+				if c== -1 {
+					return -1
+				}
+			} else {
+				count += 1
+			}
+	}
+  return
 }
 
 // CheckIfTextFile tests if the file is text or binary
