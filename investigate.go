@@ -86,7 +86,11 @@ func (fi FileInfo) investigateDir(i int, updated chan FileListUpdate) {
 		updated <- FileListUpdate{i, &fi, true}
 		return
 	}
-	fi.description = fmt.Sprintf(ColorScheme.Color("[FILENAME]%v[DEFAULT] files inside"), len(files))
+
+	fi.description =  fmt.Sprintf(ColorScheme.Color("[FILENAME]%v[DEFAULT] files inside"), len(files))
+	if len(files)==0 {
+		fi.description =  fmt.Sprintf(ColorScheme.Color("empty one"))
+	}
 	isgit := investigateGit(mode.absolutePath + "/" + fi.f.Name())
 	if isgit != "" {
 		fi.description = isgit
