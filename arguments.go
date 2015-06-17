@@ -18,6 +18,7 @@ type Mode struct {
 	summary bool // no header for file group, file type in desscription column
 	d       bool // shows directories only
 	h       bool // "himan-readable" mode
+	owner       bool // "ownership" mode
 	long    bool // "long" form, more details
 	size    bool // "show and order by size" mode
 	time    bool // "show and order by modification time" mode
@@ -50,6 +51,8 @@ func ParseArguments(arguments []string) (*Mode, error) {
 					f = &mode.long
 				case 's':
 					f = &mode.size
+				case 'o':
+					f = &mode.owner
 				case 'p':
 					f = &mode.pyramid
 				case 't':
@@ -68,7 +71,7 @@ func ParseArguments(arguments []string) (*Mode, error) {
 		}
 	}
 
-	mode.summary = !(mode.time || mode.size || mode.long)
+	mode.summary = !(mode.time || mode.size || mode.long || mode.owner)
 
     if (mode.inputPath == "") {
     	mode.inputPath = "."
