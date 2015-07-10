@@ -53,14 +53,21 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for intro to the codebase
 
 ## Installation
 
-`lsp` is written in `go` programming language.
-For now it can be installed using `go get`:
+`lsp` is written in the `go` programming language.
+It can be installed using `go get`.
 
 ```
  $ go get github.com/dborzov/lsp
 ```
+
+Then make sure that your `$PATH` includes the `$GOPATH/bin` directory.
+To do that, you can put this line your `~/.bash_profile` or `.zshrc`:
+```
+export PATH=$PATH:$GOPATH/bin
+```
+
 Once it becomes more functional, `lsp` will be distributed in native binaries
-for all platforms (Linux, MacOS, Windows). No dependancies or anything configurable by design, just one binary.
+(without dependencies) for all platforms (Linux, MacOS, Windows).
 
 ## Misc
 MIT license.
