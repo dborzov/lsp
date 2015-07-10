@@ -61,6 +61,10 @@ It can be installed using `go get`.
 ```
 
 Then make sure that your `$PATH` includes the `$GOPATH/bin` directory.
+To do that, you can put this line your `~/.bash_profile` or `.zshrc`:
+```
+export PATH=$PATH:$GOPATH/bin
+```
 
 Once it becomes more functional, `lsp` will be distributed in native binaries
 (without dependencies) for all platforms (Linux, MacOS, Windows).
