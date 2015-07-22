@@ -39,8 +39,8 @@ For now, there is `-p` key to render the file table in the left-aligned columns:
 
 
 ## Todo before v1.0
-- Rewrite outline formatting: with the current design too much space is wasted, long filenames break things
-- Mark executable files as such
+- [ ] Rewrite outline formatting: with the current design too much space is wasted, long filenames break things
+- [x] Mark executable files as such
 - Think about how to represent file rights and ownership
 - Approach hidden and generated files as outlined in [issue#3](https://github.com/dborzov/lsp/issues/3)
 - Better test coverage
