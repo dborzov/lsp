@@ -89,7 +89,7 @@ func PrintColumns(filename, description string) {
 
 	indentSize := columnSize - utf8.RuneCountInString(BlankScheme.Color(filename))
 
-	if mode.pyramid {
+	if !mode.pyramid {
 		fmt.Printf(ColorScheme.Color(fmt.Sprintf("[FILENAME]%s", filename)))
 		fmt.Printf(strings.Repeat(" ", indentSize))
 	} else {
