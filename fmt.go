@@ -17,9 +17,8 @@ const (
 )
 
 var (
-	terminalWidth   = 80
-	columnSize      = 39 // characters in the filename column
-	maxFileNameSize = columnSize - 5
+	terminalWidth = 80
+	columnSize    = 39 // characters in the filename column
 )
 
 // Defines Terminal Coloring Theme
@@ -82,7 +81,7 @@ func renderFiles(fls []*FileInfo) {
 
 // PrintColumns prints two-column table row, nicely formatted and shortened if needed
 func PrintColumns(filename, description string) {
-
+	maxFileNameSize := columnSize - 6
 	if utf8.RuneCountInString(filename) > maxFileNameSize {
 		filename = string([]rune(filename)[0:maxFileNameSize]) + "[META][...]"
 	}
