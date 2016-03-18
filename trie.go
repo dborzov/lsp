@@ -12,8 +12,6 @@
 //       all we need to do is to select node that has reasonable number of files among the children leaves (at least five)
 package main
 
-import "strings"
-
 // Node is a trie node
 type Node struct {
 	Ch  map[string]*Node // children nodes mapped with string label
@@ -89,24 +87,4 @@ func populateTrie() {
 		}
 		n.Fls = append(n.Fls, &FileList[i])
 	}
-}
-
-func nameTriePath(path []string) string {
-	var presetTitles = map[string]string{
-		"dirs":                       "Directories",
-		"regulars":                   "Regular files",
-		"specials":                   "Special Files (Neither Dirs Nor Regulars)",
-		"regulars>text":              "Text Files",
-		"regulars>executables":       "Executables",
-		"regulars>blobs":             "Blobs",
-		"regulars>empty":             "Empty Files",
-		"special>device":             "Devices",
-		"special>symlink":            "Symlinks",
-		"special>unix domain socket": "UNIX Domain Socket",
-	}
-	grp := strings.Join(path, ">")
-	if title, ok := presetTitles[grp]; ok {
-		return title
-	}
-	return grp
 }
