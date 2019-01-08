@@ -71,8 +71,3 @@ Once it becomes more functional, `lsp` will be distributed in native binaries
 
 ## Misc
 MIT license.
-
-
-This tool is named after Lumpy Space Princess(LSP), a very quotable character from the TV show "Adventure Time with Finn and Jake".
-
-![can't handle these lumps](https://raw.githubusercontent.com/dborzov/lsp/screenshots/beans.gif)
