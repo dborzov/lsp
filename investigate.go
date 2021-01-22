@@ -8,6 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	humanize "github.com/dustin/go-humanize"
 )
 
 const (
@@ -82,49 +84,51 @@ func (fi FileInfo) investigateRegFile(i int, updated chan FileListUpdate) {
 }
 
 func (fi FileInfo) investigateDir(i int, updated chan FileListUpdate) {
-	filepath := mode.absolutePath + "/" + fi.f.Name()
+	path := filepath.Join(mode.absolutePath, fi.f.Name())
 
-	fileCount := getNumberOfFilesInDir(filepath)
-	fi.description =  fmt.Sprintf(ColorScheme.Color("[FILENAME]%v[DEFAULT] files"), fileCount)
+	fileCount, fileSize := getNumberOfFilesInDir(path)
 
-	if fileCount==-1 {
-		fi.description =  fmt.Sprintf(ColorScheme.Color("can't read its content"))
+	fi.description = fmt.Sprintf(ColorScheme.Color("[FILENAME]%d[DEFAULT] files; [FILENAME]%s[DEFAULT]"), fileCount, humanize.Bytes(uint64(fileSize)))
+
+	if fileCount == -1 {
+		fi.description = fmt.Sprintf(ColorScheme.Color("can't read its content"))
 	}
 
-	if fileCount==0 {
-		fi.description =  fmt.Sprintf(ColorScheme.Color("empty one"))
+	if fileCount == 0 {
+		fi.description = fmt.Sprintf(ColorScheme.Color("empty one"))
 	}
 
-	if fileCount==1 {
-		fmt.Sprintf(ColorScheme.Color("just one file"))
+	if fileCount == 1 {
+		fi.description = fmt.Sprintf(ColorScheme.Color("just one file"))
 	}
 
-	isgit := investigateGit(mode.absolutePath + "/" + fi.f.Name())
+	isgit := investigateGit(path)
 	if isgit != "" {
 		fi.description = isgit
 	}
 	updated <- FileListUpdate{i, &fi, true}
 }
 
-
-func getNumberOfFilesInDir(path string)(count int){
+func getNumberOfFilesInDir(path string) (count int, size int) {
 	files, err := ioutil.ReadDir(path)
 	if err != nil {
-		return -1
+		return -1, -1
 	}
 
-	for _, f:= range files{
-			if f.IsDir() {
-				c := getNumberOfFilesInDir(path + "/" + f.Name())
-				count += c
-				if c== -1 {
-					return -1
-				}
-			} else {
-				count += 1
+	for _, f := range files {
+		if f.IsDir() {
+			c, s := getNumberOfFilesInDir(path + "/" + f.Name())
+			count += c
+			size += s
+			if c == -1 {
+				return -1, -1
 			}
+		} else {
+			count += 1
+			size += int(f.Size())
+		}
 	}
-  return
+	return
 }
 
 // CheckIfTextFile tests if the file is text or binary

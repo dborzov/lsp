@@ -11,8 +11,8 @@ var mode *Mode
 
 // Mode reflects running mode with superset of ls flags and target path
 type Mode struct {
-	inputPath    string // target path literal from the argument parsing (e.g. "~/hi")
-	absolutePath string // absolute path to the target directory (e.g. "/home/dima/hi")
+	inputPath    string   // target path literal from the argument parsing (e.g. "~/hi")
+	absolutePath string   // absolute path to the target directory (e.g. "/home/dima/hi")
 	comments     []string // free form descriptions of dir in question (like when it is a git repo)
 
 	summary bool // no header for file group, file type in desscription column
@@ -36,7 +36,7 @@ var err error
 // (so that `lsp -al` is equivalent to `lsp -a -l` or `lsp -la`)
 func ParseArguments(arguments []string) (*Mode, error) {
 	mode = new(Mode)
-	for i, l := range arguments[1:] {
+	for _, l := range arguments[1:] {
 		if l[0] == flagDash {
 			// this argument seems to be a flag
 			for _, flag := range l[1:] {
@@ -60,19 +60,16 @@ func ParseArguments(arguments []string) (*Mode, error) {
 				}
 			}
 		} else {
-			// this argument seems to be a part of the target inputPath
-			if i != 0 {
-				mode.inputPath = mode.inputPath + " "
-			}
 			mode.inputPath = mode.inputPath + l
 		}
 	}
 
 	mode.summary = !(mode.time || mode.size || mode.long)
 
-    if (mode.inputPath == "") {
-    	mode.inputPath = "."
-    }
+	if mode.inputPath == "" {
+		mode.inputPath = "."
+	}
+
 	mode.absolutePath, err = filepath.Abs(mode.inputPath)
 	return mode, err
 }

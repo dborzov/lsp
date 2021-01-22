@@ -38,8 +38,10 @@ func (fi FileInfo) Description() (description string) {
 }
 
 func (fi FileInfo) representSize() string {
+	if fi.f.IsDir() {
+		return fi.description
+	}
 	return humanize.Bytes(uint64(fi.f.Size()))
-
 }
 
 func (fi FileInfo) representTimeDetailed() string {
